@@ -25,41 +25,47 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package it.unicam.cs.formula1.api.Giocatori;
+package it.unicam.cs.formula1.api.Gara;
 
-import it.unicam.cs.formula1.api.Circuito.ICircuito;
-import it.unicam.cs.formula1.api.Posizione.IPosizione;
+import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
 
-public class GiocatoreRobot implements IGiocatore{
-    /**
-     * Ritorna il simbolo associato al giocatore.
-     *
-     * @return il simbolo del giocatore.
-     */
-    @Override
-    public char getSimbolo() {
-        return 0;
-    }
+import java.util.List;
+
+public interface IGara {
 
     /**
-     * Ritorna la posizione attuale del giocatore.
-     *
-     * @return la posizione attuale del giocatore.
+     * Avvia la gara con i giocatori specificati.
      */
-    @Override
-    public IPosizione getPosizioneAttuale() {
-        return null;
-    }
+    void avviaGara();
 
     /**
-     * Determina la prossima mossa del giocatore.
-     *
-     * @param circuito
-     * @param posizioneAttuale
-     * @return la prossima mossa del giocatore.
+     * Avanza la gara di un turno, facendo muovere tutti i giocatori.
      */
-    @Override
-    public IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale) {
-        return null;
-    }
+    void avanzaTurno();
+
+    /**
+     * Verifica se la gara è terminata.
+     *
+     * @return true se la gara è terminata, false altrimenti.
+     */
+    boolean garaTerminata();
+
+    /**
+     * Restituisce il giocatore vincitore, se c'è.
+     *
+     * @return il giocatore vincitore, o null se non c'è ancora un vincitore.
+     */
+    IGiocatore getVincitore();
+
+    /**
+     * Restituisce la lista dei giocatori che partecipano alla gara.
+     *
+     * @return la lista dei giocatori.
+     */
+    List<IGiocatore> getGiocatori();
+
+    /**
+     * Stampa lo stato attuale del circuito con le posizioni dei giocatori.
+     */
+    void stampaStatoGara();
 }

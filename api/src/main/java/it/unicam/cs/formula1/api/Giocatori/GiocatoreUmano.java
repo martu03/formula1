@@ -27,5 +27,54 @@
 
 package it.unicam.cs.formula1.api.Giocatori;
 
+import it.unicam.cs.formula1.api.Circuito.ICircuito;
+import it.unicam.cs.formula1.api.Posizione.IPosizione;
+
 public class GiocatoreUmano implements IGiocatore{
+
+    private final char simbolo;
+    private IPosizione posizioneAttuale;
+
+    /**
+     * Costruttore che crea un giocatore umano.
+     *
+     * @param simbolo Simbolo associato al giocatore.
+     * @param posizioneAttuale Posizione attuale del giocatore.
+     */
+    public GiocatoreUmano(char simbolo, IPosizione posizioneAttuale){
+        this.simbolo = simbolo;
+        this.posizioneAttuale = null;
+    }
+    /**
+     * Ritorna il simbolo associato al giocatore.
+     *
+     * @return il simbolo del giocatore.
+     */
+    @Override
+    public char getSimbolo() {
+        return simbolo;
+    }
+
+    /**
+     * Ritorna la posizione attuale del giocatore.
+     *
+     * @return la posizione attuale del giocatore.
+     */
+    @Override
+    public IPosizione getPosizioneAttuale() {
+        return posizioneAttuale;
+    }
+
+    /**
+     * Determina la prossima mossa del giocatore.
+     *
+     * @param circuito
+     * @param posizioneAttuale
+     * @return la prossima mossa del giocatore.
+     */
+    @Override
+    public IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale) {
+        return null;
+    }
 }
+

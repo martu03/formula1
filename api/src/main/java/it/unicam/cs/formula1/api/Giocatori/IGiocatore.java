@@ -27,5 +27,31 @@
 
 package it.unicam.cs.formula1.api.Giocatori;
 
+import it.unicam.cs.formula1.api.Circuito.ICircuito;
+import it.unicam.cs.formula1.api.Posizione.IPosizione;
+
 public interface IGiocatore {
+
+    /**
+     * Ritorna il simbolo associato al giocatore.
+     *
+     * @return il simbolo del giocatore.
+     */
+    char getSimbolo();
+
+    /**
+     * Ritorna la posizione attuale del giocatore.
+     *
+     * @return la posizione attuale del giocatore.
+     */
+    IPosizione getPosizioneAttuale();
+
+    /*
+     * Determina la prossima mossa del giocatore.
+     *
+     * @param circuito
+     * @param posizioneAttuale del giocatore
+     * @return la prossima mossa del giocatore.
+     */
+    IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale);
 }
