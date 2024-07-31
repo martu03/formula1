@@ -27,7 +27,12 @@
  */
 package it.unicam.cs.formula1.api.Posizione;
 
+/**
+ * Questa interfaccia rappresenta il concetto di posizione, componente
+ * del circuito di Formula 1.
+ */
 public interface IPosizione {
+
     /**
      * Restituisce la coordinata X della posizione.
      *

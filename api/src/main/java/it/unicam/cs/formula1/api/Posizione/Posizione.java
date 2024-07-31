@@ -29,6 +29,9 @@ package it.unicam.cs.formula1.api.Posizione;
 
 import java.util.Objects;
 
+/**
+ * Questa classe rappresenta una posizione all'interno del circuito di Formula 1.
+ */
 public class Posizione implements IPosizione{
     private int x;
     private int y;

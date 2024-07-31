@@ -1,4 +1,3 @@
-
 /*
  * MIT License
  *
@@ -25,42 +24,43 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
+
 package it.unicam.cs.formula1.api.Circuito;
 
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
+import it.unicam.cs.formula1.api.Posizione.Posizione;
 import java.util.Set;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashSet;
 
-/**
- * Questa interfaccia rappresenta un circuito del gioco Formula 1.
- */
-public interface ICircuito {
+public class InputCircuito implements IinputCircuito{
 
-    /**
-     * Verifica se una data posizione è all'interno del circuito.
-     *
-     * @param posizione La posizione da verificare.
-     * @return true se la posizione è all'interno del circuito, false altrimenti.
-     */
-    boolean isInsideCircuit(IPosizione posizione);
+    public Set<IPosizione> importTracciato(String filePath) {
+        Set<IPosizione> tracciato = new HashSet<>();
 
-    /**
-     * Restituisce i punti di partenza del circuito.
-     *
-     * @return Le posizioni di partenza del circuito.
-     */
-    Set<IPosizione> getStartLine();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Rimuovi eventuali spazi bianchi
+                line = line.trim();
+                if (line.isEmpty()) {
+                    continue;
+                }
 
-    /**
-     * Restituisce i punti di arrivo del circuito.
-     *
-     * @return Le posizioni di arrivo del circuito.
-     */
-    Set<IPosizione> getEndLine();
+                // Split della riga sulle virgole per ottenere le coordinate
+                String[] parts = line.split(",");
+                int x = Integer.parseInt(parts[0]);
+                int y = Integer.parseInt(parts[1]);
 
-    /**
-     * Restituisce tutte le posizioni che costituiscono il circuito.
-     *
-     * @return Un insieme di posizioni che costituiscono il circuito.
-     */
-    Set<IPosizione> getAllPositions();
+                // Aggiungi la posizione all'hashset
+                tracciato.add(new Posizione(x, y));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tracciato;
+    }
 }

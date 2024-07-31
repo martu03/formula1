@@ -27,9 +27,11 @@
 package it.unicam.cs.formula1.api.Circuito;
 
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
-
 import java.util.Set;
 
+/**
+ * Questa classe rappresenta un circuito del gioco Formula 1.
+ */
 public class Circuito implements ICircuito{
 
     private final Set<IPosizione> posizioni;
@@ -57,7 +59,7 @@ public class Circuito implements ICircuito{
      */
     @Override
     public boolean isInsideCircuit(IPosizione posizione) {
-        return false;
+        return posizioni.contains(posizione);
     }
 
     /**
@@ -67,7 +69,7 @@ public class Circuito implements ICircuito{
      */
     @Override
     public Set<IPosizione> getStartLine() {
-        return Set.of();
+        return startLine;
     }
 
     /**
@@ -77,7 +79,7 @@ public class Circuito implements ICircuito{
      */
     @Override
     public Set<IPosizione> getEndLine() {
-        return Set.of();
+        return finishLine;
     }
 
     /**
@@ -87,6 +89,6 @@ public class Circuito implements ICircuito{
      */
     @Override
     public Set<IPosizione> getAllPositions() {
-        return Set.of();
+        return posizioni;
     }
 }

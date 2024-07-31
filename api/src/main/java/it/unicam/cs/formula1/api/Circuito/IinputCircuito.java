@@ -1,4 +1,3 @@
-
 /*
  * MIT License
  *
@@ -25,42 +24,19 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
+
 package it.unicam.cs.formula1.api.Circuito;
 
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 import java.util.Set;
 
-/**
- * Questa interfaccia rappresenta un circuito del gioco Formula 1.
- */
-public interface ICircuito {
+public interface IinputCircuito {
 
     /**
-     * Verifica se una data posizione è all'interno del circuito.
+     * Importa il tracciato del circuito da un file.
      *
-     * @param posizione La posizione da verificare.
-     * @return true se la posizione è all'interno del circuito, false altrimenti.
+     * @param filePath Il percorso del file da cui importare il tracciato.
+     * @return Un insieme di posizioni che costituiscono il tracciato del circuito.
      */
-    boolean isInsideCircuit(IPosizione posizione);
-
-    /**
-     * Restituisce i punti di partenza del circuito.
-     *
-     * @return Le posizioni di partenza del circuito.
-     */
-    Set<IPosizione> getStartLine();
-
-    /**
-     * Restituisce i punti di arrivo del circuito.
-     *
-     * @return Le posizioni di arrivo del circuito.
-     */
-    Set<IPosizione> getEndLine();
-
-    /**
-     * Restituisce tutte le posizioni che costituiscono il circuito.
-     *
-     * @return Un insieme di posizioni che costituiscono il circuito.
-     */
-    Set<IPosizione> getAllPositions();
+    Set<IPosizione> importTracciato(String filePath);
 }
