@@ -72,7 +72,7 @@ set CLASSPATH=%APP_HOME%\lib\app.jar;%APP_HOME%\lib\api.jar;%APP_HOME%\lib\commo
 
 
 @rem Execute app
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %APP_OPTS%  -classpath "%CLASSPATH%" it.unicam.cs.formula1.app.App %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %APP_OPTS%  -classpath "%CLASSPATH%" it.unicam.cs.formula1.app.prova %*
 
 :end
 @rem End local scope for the variables with windows NT shell
