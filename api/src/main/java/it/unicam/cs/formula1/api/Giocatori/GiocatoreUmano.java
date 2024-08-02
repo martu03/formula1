@@ -30,6 +30,9 @@ package it.unicam.cs.formula1.api.Giocatori;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
+/**
+ * Questa classe rappresenta un giocatore umano.
+ */
 public class GiocatoreUmano implements IGiocatore{
 
     private final char simbolo;
@@ -39,12 +42,12 @@ public class GiocatoreUmano implements IGiocatore{
      * Costruttore che crea un giocatore umano.
      *
      * @param simbolo Simbolo associato al giocatore.
-     * @param posizioneAttuale Posizione attuale del giocatore.
      */
-    public GiocatoreUmano(char simbolo, IPosizione posizioneAttuale){
+    public GiocatoreUmano(char simbolo){
         this.simbolo = simbolo;
         this.posizioneAttuale = null;
     }
+
     /**
      * Ritorna il simbolo associato al giocatore.
      *
@@ -53,6 +56,16 @@ public class GiocatoreUmano implements IGiocatore{
     @Override
     public char getSimbolo() {
         return simbolo;
+    }
+
+    /**
+     * Imposta la posizione attuale del giocatore.
+     *
+     * @param posizioneAttuale la posizione attuale del giocatore.
+     */
+    @Override
+    public void setPosizioneAttuale(IPosizione posizioneAttuale) {
+        this.posizioneAttuale = posizioneAttuale;
     }
 
     /**
@@ -74,7 +87,24 @@ public class GiocatoreUmano implements IGiocatore{
      */
     @Override
     public IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale) {
+        //prossima mossa devo prenderla da input
+        //devo visualizzare da terminale le possibili mosse che il giocatore umano può scegliere
+        //utilizzando il metodo getPosizioniRaggiungibili
         return null;
     }
+
+    /**
+     * Ritorna le posizioni raggiungibili dal giocatore.
+     *
+     * @param circuito
+     * @param posizioneAttuale
+     * @return le posizioni raggiungibili dal giocatore.
+     */
+    @Override
+    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, IPosizione posizioneAttuale) {
+        return new IPosizione[0];
+    }
+
+
 }
 

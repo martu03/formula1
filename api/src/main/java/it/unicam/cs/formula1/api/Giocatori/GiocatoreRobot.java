@@ -31,6 +31,20 @@ import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
 public class GiocatoreRobot implements IGiocatore{
+
+    private final char simbolo;
+    private IPosizione posizioneAttuale;
+
+    /**
+     * Costruttore che crea un giocatore robot.
+     *
+     * @param simbolo Simbolo associato al giocatore.
+     */
+    public GiocatoreRobot(char simbolo){
+        this.simbolo = simbolo;
+        this.posizioneAttuale = null;
+    }
+
     /**
      * Ritorna il simbolo associato al giocatore.
      *
@@ -38,7 +52,17 @@ public class GiocatoreRobot implements IGiocatore{
      */
     @Override
     public char getSimbolo() {
-        return 0;
+        return simbolo;
+    }
+
+    /**
+     * Imposta la posizione attuale del giocatore.
+     *
+     * @param posizioneAttuale la posizione attuale del giocatore.
+     */
+    @Override
+    public void setPosizioneAttuale(IPosizione posizioneAttuale) {
+        this.posizioneAttuale = posizioneAttuale;
     }
 
     /**
@@ -48,7 +72,7 @@ public class GiocatoreRobot implements IGiocatore{
      */
     @Override
     public IPosizione getPosizioneAttuale() {
-        return null;
+        return posizioneAttuale;
     }
 
     /**
@@ -60,6 +84,21 @@ public class GiocatoreRobot implements IGiocatore{
      */
     @Override
     public IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale) {
+        //la prossima mossa è scelta casualmente tra quelle possibili determinate dal
+        //metodo getPosizioniRaggiungibili
         return null;
+    }
+
+    /**
+     * Ritorna le posizioni raggiungibili dal giocatore.
+     *
+     * @param circuito
+     * @param posizioneAttuale
+     * @return le posizioni raggiungibili dal giocatore.
+     */
+    @Override
+    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, IPosizione posizioneAttuale) {
+        //le posizioni raggiungibili sono calcolate in base alla posizione attuale del giocatore
+        return new IPosizione[0];
     }
 }

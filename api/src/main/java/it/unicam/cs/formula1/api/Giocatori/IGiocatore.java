@@ -30,6 +30,11 @@ package it.unicam.cs.formula1.api.Giocatori;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
+import java.lang.reflect.Array;
+
+/**
+ * Questa interfaccia rappresenta un giocatore.
+ */
 public interface IGiocatore {
 
     /**
@@ -39,6 +44,12 @@ public interface IGiocatore {
      */
     char getSimbolo();
 
+    /**
+     * Imposta la posizione attuale del giocatore.
+     *
+     * @param posizioneAttuale la posizione attuale del giocatore.
+     */
+    void setPosizioneAttuale(IPosizione posizioneAttuale);
     /**
      * Ritorna la posizione attuale del giocatore.
      *
@@ -54,4 +65,13 @@ public interface IGiocatore {
      * @return la prossima mossa del giocatore.
      */
     IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale);
+
+    /*
+     * Ritorna le posizioni raggiungibili dal giocatore.
+     *
+     * @param circuito
+     * @param posizioneAttuale del giocatore
+     * @return le posizioni raggiungibili dal giocatore.
+     */
+    IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, IPosizione posizioneAttuale);
 }

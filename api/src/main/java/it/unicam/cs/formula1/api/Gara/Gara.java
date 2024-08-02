@@ -34,6 +34,9 @@ import it.unicam.cs.formula1.api.Posizione.IPosizione;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Questa classe rappresenta una gara di Formula 1, ovvero una partita del gioco
+ */
 public class Gara implements IGara{
 
     private final ICircuito circuito;
@@ -52,15 +55,22 @@ public class Gara implements IGara{
         this.giocatori = giocatori;
         this.posizioniGiocatori = new ArrayList<>();
         for (IGiocatore giocatore : giocatori) {
-            posizioniGiocatori.add(circuito.getStartLine().iterator().next());
+            IPosizione posizioneGiocatore = circuito.getStartLine().iterator().next();
+            posizioniGiocatori.add(posizioneGiocatore);
+            giocatore.setPosizioneAttuale(posizioneGiocatore);
         }
         this.vincitore = null;
     }
+
     /**
      * Avvia la gara con i giocatori specificati.
      */
     @Override
     public void avviaGara() {
+        while (!garaTerminata()) {
+            avanzaTurno();
+            stampaStatoGara();
+        }
     }
 
     /**

@@ -31,6 +31,9 @@ import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
 
 import java.util.List;
 
+/**
+ * Questa interfaccia rappresenta una gara di Formula 1, ovvero una partita del gioco
+ */
 public interface IGara {
 
     /**
