@@ -28,21 +28,38 @@
 package it.unicam.cs.formula1.app;
 
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
+import it.unicam.cs.formula1.api.Gara.Gara;
+import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
+import it.unicam.cs.formula1.api.Importer.BotImporter;
 import it.unicam.cs.formula1.api.Importer.CircuitoImporter;
-import it.unicam.cs.formula1.api.Visualizzatore.IVisualizzaCircuito;
-import it.unicam.cs.formula1.api.Visualizzatore.VisualizzaCircuito;
+import it.unicam.cs.formula1.api.Visualizzatore.IVisualizzatore;
+import it.unicam.cs.formula1.api.Visualizzatore.Visualizzatore;
 
 import java.io.IOException;
+import java.util.List;
 
 public class prova {
     public static void main(String[] args) {
+        ICircuito circuito = null;
+        List<IGiocatore> giocatori = null;
+        //importa tracciato
         try {
             CircuitoImporter importer = new CircuitoImporter();
-            ICircuito circuito = importer.importaCircuito("src/main/java/it/unicam/cs/formula1/app/circuito.txt");
-            IVisualizzaCircuito visualization = new VisualizzaCircuito();
-            visualization.visualizzaCircuito(circuito);
+            circuito = importer.importaCircuito("src/main/java/it/unicam/cs/formula1/app/circuito.txt");
         } catch (IOException e) {
             System.err.println("Errore durante l'importazione del circuito: " + e.getMessage());
         }
+
+        //importa giocatori bot
+        try {
+            BotImporter importerBot = new BotImporter();
+            giocatori = importerBot.importaBot("src/main/java/it/unicam/cs/formula1/app/giocatori_bot.txt");
+        } catch (IOException e) {
+            System.err.println("Errore durante l'importazione del circuito: " + e.getMessage());
+        }
+
+        Gara gara = new Gara(circuito, giocatori);
+
+        gara.stampaStatoGara();
     }
 }
