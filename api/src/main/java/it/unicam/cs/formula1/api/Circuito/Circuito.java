@@ -63,6 +63,28 @@ public class Circuito implements ICircuito{
     }
 
     /**
+     * Verifica se una data posizione è all'interno della linea di partenza.
+     *
+     * @param posizione La posizione da verificare.
+     * @return true se la posizione è all'interno della linea di partenza, false altrimenti.
+     */
+    @Override
+    public boolean isInsideStartLine(IPosizione posizione) {
+        return startLine.contains(posizione);
+    }
+
+    /**
+     * Verifica se una data posizione è all'interno della linea di arrivo.
+     *
+     * @param posizione La posizione da verificare.
+     * @return true se la posizione è all'interno della linea di arrivo, false altrimenti.
+     */
+    @Override
+    public boolean isInsideEndLine(IPosizione posizione) {
+        return finishLine.contains(posizione);
+    }
+
+    /**
      * Restituisce il punto di partenza del circuito.
      *
      * @return La posizione di partenza del circuito.

@@ -44,6 +44,22 @@ public interface ICircuito {
     boolean isInsideCircuit(IPosizione posizione);
 
     /**
+     * Verifica se una data posizione è all'interno della linea di partenza.
+     *
+     * @param posizione La posizione da verificare.
+     * @return true se la posizione è all'interno della linea di partenza, false altrimenti.
+     */
+    boolean isInsideStartLine (IPosizione posizione);
+
+    /**
+     * Verifica se una data posizione è all'interno della linea di arrivo.
+     *
+     * @param posizione La posizione da verificare.
+     * @return true se la posizione è all'interno della linea di arrivo, false altrimenti.
+     */
+    boolean isInsideEndLine (IPosizione posizione);
+
+    /**
      * Restituisce i punti di partenza del circuito.
      *
      * @return Le posizioni di partenza del circuito.

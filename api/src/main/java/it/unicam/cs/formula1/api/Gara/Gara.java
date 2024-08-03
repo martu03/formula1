@@ -30,6 +30,7 @@ package it.unicam.cs.formula1.api.Gara;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
+import it.unicam.cs.formula1.api.Posizione.Posizione;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +55,20 @@ public class Gara implements IGara{
         this.circuito = circuito;
         this.giocatori = giocatori;
         this.posizioniGiocatori = new ArrayList<>();
-        for (IGiocatore giocatore : giocatori) {
-            IPosizione posizioneGiocatore = circuito.getStartLine().iterator().next();
+
+        List<IPosizione> startLinePositions = new ArrayList<>(circuito.getStartLine());
+
+        if (giocatori.size() > startLinePositions.size()) {
+            throw new IllegalArgumentException("Non ci sono abbastanza posizioni di partenza per tutti i giocatori.");
+        }
+
+        for (int i = 0; i < giocatori.size(); i++) {
+            IGiocatore giocatore = giocatori.get(i);
+            IPosizione posizioneGiocatore = startLinePositions.get(i);
             posizioniGiocatori.add(posizioneGiocatore);
             giocatore.setPosizioneAttuale(posizioneGiocatore);
         }
+
         this.vincitore = null;
     }
 
@@ -116,6 +126,71 @@ public class Gara implements IGara{
      */
     @Override
     public void stampaStatoGara() {
+        int larghezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getX).max().orElse(0);
+        int altezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getY).max().orElse(0);
 
+        char[][] griglia = stampaPista(larghezza, altezza);
+
+        griglia = inserisciGiocatori(griglia, circuito);
+        stampaGriglia(griglia);
+    }
+
+    /**
+     * Inizializza la griglia di gioco con tutti 0.
+     *
+     * @param larghezza la larghezza della griglia.
+     * @param altezza l'altezza della griglia.
+     * @return la griglia di gioco inizializzata.
+     */
+    private char[][] stampaPista(int larghezza, int altezza) {
+        char[][] griglia = new char[altezza][larghezza];
+
+        for (int y = 0; y < altezza; y++) {
+            for (int x = 0; x < larghezza; x++) {
+                IPosizione posizione = new Posizione(x, y);
+                if (circuito.isInsideCircuit(posizione)) {
+                    if (circuito.isInsideStartLine(posizione)) {
+                        griglia[y][x] = 'S'; // Posizione di partenza
+                    } else if (circuito.isInsideEndLine(posizione)) {
+                        griglia[y][x] = 'E'; // Posizione di arrivo
+                    } else {
+                        griglia[y][x] = '1'; // Posizione della pista
+                    }
+                } else {
+                    griglia[y][x] = '0'; // Posizione fuori pista
+                }
+            }
+        }
+        return griglia;
+    }
+
+    /**
+     * Inserisce i giocatori nella griglia di gioco.
+     *
+     * @param griglia la griglia di gioco.
+     * @param circuito il circuito di gioco.
+     */
+    private char[][] inserisciGiocatori(char[][] griglia, ICircuito circuito) {
+        for (IGiocatore giocatore : giocatori) {
+            IPosizione posizione = giocatore.getPosizioneAttuale();
+            int x = posizione.getX();
+            int y = posizione.getY();
+            griglia[y][x] = giocatore.getSimbolo(); // Posiziona il simbolo del giocatore sulla griglia
+        }
+        return griglia;
+    }
+
+    /**
+     * Stampa la griglia di gioco.
+     *
+     * @param griglia la griglia di gioco.
+     */
+    private void stampaGriglia(char[][] griglia) {
+        for (char[] riga : griglia) {
+            for (char cella : riga) {
+                System.out.print(cella + " "); // Stampa ogni cella con uno spazio
+            }
+            System.out.println(); // Vai a capo dopo ogni riga
+        }
     }
 }
