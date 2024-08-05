@@ -30,6 +30,8 @@ package it.unicam.cs.formula1.api.Giocatori;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
+import java.util.List;
+
 /**
  * Questa classe rappresenta un giocatore umano.
  */
@@ -79,17 +81,14 @@ public class GiocatoreUmano implements IGiocatore{
     }
 
     /**
-     * Determina la prossima mossa del giocatore.
+     * Ritorna la prossima mossa del giocatore.
      *
      * @param circuito
-     * @param posizioneAttuale
+     * @param posizioniGiocatori
      * @return la prossima mossa del giocatore.
      */
     @Override
-    public IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale) {
-        //prossima mossa devo prenderla da input
-        //devo visualizzare da terminale le possibili mosse che il giocatore umano può scegliere
-        //utilizzando il metodo getPosizioniRaggiungibili
+    public IPosizione ProssimaMossa(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
         return null;
     }
 
@@ -97,11 +96,11 @@ public class GiocatoreUmano implements IGiocatore{
      * Ritorna le posizioni raggiungibili dal giocatore.
      *
      * @param circuito
-     * @param posizioneAttuale
+     * @param posizioniGiocatori
      * @return le posizioni raggiungibili dal giocatore.
      */
     @Override
-    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, IPosizione posizioneAttuale) {
+    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
         return new IPosizione[0];
     }
 

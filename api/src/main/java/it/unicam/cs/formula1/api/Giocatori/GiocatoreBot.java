@@ -30,6 +30,8 @@ package it.unicam.cs.formula1.api.Giocatori;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
+import java.util.List;
+
 public class GiocatoreBot implements IGiocatore{
 
     private final char simbolo;
@@ -76,16 +78,14 @@ public class GiocatoreBot implements IGiocatore{
     }
 
     /**
-     * Determina la prossima mossa del giocatore.
+     * Ritorna la prossima mossa del giocatore.
      *
      * @param circuito
-     * @param posizioneAttuale
+     * @param posizioniGiocatori
      * @return la prossima mossa del giocatore.
      */
     @Override
-    public IPosizione ProssimaMossa(ICircuito circuito, IPosizione posizioneAttuale) {
-        //la prossima mossa è scelta casualmente tra quelle possibili determinate dal
-        //metodo getPosizioniRaggiungibili
+    public IPosizione ProssimaMossa(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
         return null;
     }
 
@@ -93,12 +93,12 @@ public class GiocatoreBot implements IGiocatore{
      * Ritorna le posizioni raggiungibili dal giocatore.
      *
      * @param circuito
-     * @param posizioneAttuale
+     * @param posizioniGiocatori
      * @return le posizioni raggiungibili dal giocatore.
      */
     @Override
-    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, IPosizione posizioneAttuale) {
-        //le posizioni raggiungibili sono calcolate in base alla posizione attuale del giocatore
+    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
         return new IPosizione[0];
     }
+
 }
