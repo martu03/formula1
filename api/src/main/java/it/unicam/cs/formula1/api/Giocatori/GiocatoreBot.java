@@ -30,12 +30,16 @@ package it.unicam.cs.formula1.api.Giocatori;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GiocatoreBot implements IGiocatore{
 
     private final char simbolo;
     private IPosizione posizioneAttuale;
+    private Mossa puntoPrinciale;
+    //DEVO AGGIUNGERE IL CONCETTO DI PUNTO PRINCIPALE
 
     /**
      * Costruttore che crea un giocatore robot.
@@ -45,6 +49,7 @@ public class GiocatoreBot implements IGiocatore{
     public GiocatoreBot(char simbolo){
         this.simbolo = simbolo;
         this.posizioneAttuale = null;
+        this.puntoPrinciale = new Mossa(0, 0);
     }
 
     /**
@@ -58,16 +63,6 @@ public class GiocatoreBot implements IGiocatore{
     }
 
     /**
-     * Imposta la posizione attuale del giocatore.
-     *
-     * @param posizioneAttuale la posizione attuale del giocatore.
-     */
-    @Override
-    public void setPosizioneAttuale(IPosizione posizioneAttuale) {
-        this.posizioneAttuale = posizioneAttuale;
-    }
-
-    /**
      * Ritorna la posizione attuale del giocatore.
      *
      * @return la posizione attuale del giocatore.
@@ -78,6 +73,37 @@ public class GiocatoreBot implements IGiocatore{
     }
 
     /**
+     * Ritorna il punto principale del giocatore.
+     *
+     * @return il punto principale del giocatore.
+     */
+    @Override
+    public Mossa getPuntoPrincipale() {
+        return puntoPrinciale;
+    }
+
+    /**
+     * Imposta la posizione attuale del giocatore.
+     *
+     * @param posizioneAttuale la posizione attuale del giocatore.
+     */
+    @Override
+    public void setPosizioneAttuale(IPosizione posizioneAttuale) {
+        this.posizioneAttuale = posizioneAttuale;
+    }
+
+    /**
+     * Imposta il punto principale del giocatore.
+     *
+     * @param puntoPrincipale il punto principale del giocatore.
+     */
+    @Override
+    public void setPuntoPrincipale(Mossa puntoPrincipale) {
+        this.puntoPrinciale = puntoPrincipale;
+    }
+
+
+    /**
      * Ritorna la prossima mossa del giocatore.
      *
      * @param circuito
@@ -86,7 +112,16 @@ public class GiocatoreBot implements IGiocatore{
      */
     @Override
     public IPosizione ProssimaMossa(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
-        return null;
+        List<IPosizione> posizioniPossibili = getPosizioniRaggiungibili(circuito, posizioniGiocatori);
+
+        if (posizioniPossibili.isEmpty()) {
+            return posizioneAttuale; // Se non ci sono mosse possibili, ritorna la posizione attuale
+        }
+
+        Random random = new Random();
+        int sceltaRandom = random.nextInt(posizioniPossibili.size());
+
+        return posizioniPossibili.get(sceltaRandom);
     }
 
     /**
@@ -97,8 +132,15 @@ public class GiocatoreBot implements IGiocatore{
      * @return le posizioni raggiungibili dal giocatore.
      */
     @Override
-    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
-        return new IPosizione[0];
+    public List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
+        IPosizione[] ottoVicini = posizioneAttuale.getOttoVicini();
+        List<IPosizione> posizioniPossibili = new ArrayList<>();
+        for (IPosizione posizione : ottoVicini) {
+            if(circuito.isInsideCircuit(posizione) && !posizioniGiocatori.contains(posizione)){
+                posizioniPossibili.add(posizione);
+            }
+        }
+        return posizioniPossibili;
     }
 
 }

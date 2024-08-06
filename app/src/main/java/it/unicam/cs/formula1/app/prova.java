@@ -29,17 +29,22 @@ package it.unicam.cs.formula1.app;
 
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Gara.Gara;
+import it.unicam.cs.formula1.api.Giocatori.GiocatoreUmano;
 import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
 import it.unicam.cs.formula1.api.Importer.BotImporter;
 import it.unicam.cs.formula1.api.Importer.CircuitoImporter;
+import it.unicam.cs.formula1.api.Posizione.IPosizione;
+import it.unicam.cs.formula1.api.Posizione.Posizione;
 import it.unicam.cs.formula1.api.Visualizzatore.IVisualizzatore;
 import it.unicam.cs.formula1.api.Visualizzatore.Visualizzatore;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class prova {
     public static void main(String[] args) {
+
         ICircuito circuito = null;
         List<IGiocatore> giocatori = null;
         //importa tracciato
@@ -61,5 +66,9 @@ public class prova {
         Gara gara = new Gara(circuito, giocatori);
 
         gara.stampaStatoGara();
+
+
+
+
     }
 }

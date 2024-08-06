@@ -1,4 +1,3 @@
-
 /*
  * MIT License
  *
@@ -25,33 +24,35 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package it.unicam.cs.formula1.api.Posizione;
+
+package it.unicam.cs.formula1.api.Giocatori;
 
 /**
- * Questa interfaccia rappresenta il concetto di posizione, componente
- * del circuito di Formula 1.
+ * Questa classe rappresenta una mossa di un giocatore.
  */
-public interface IPosizione {
+public class Mossa {
+    private int dx; // Spostamento destra-sinistra
+    private int dy; // Spostamento alto-basso
 
     /**
-     * Restituisce la coordinata X della posizione.
+     * Costruttore che crea una mossa.
      *
-     * @return la coordinata X.
+     * @param dx Spostamento destra-sinistra.
+     * @param dy Spostamento alto-basso.
      */
-    int getX();
+    public Mossa(int dx, int dy) {
+        this.dx = dx;
+        this.dy = dy;
+    }
 
     /**
-     * Restituisce la coordinata Y della posizione.
+     * Restituisce una rappresentazione stringa dell'oggetto Mossa.
+     * La stringa include le coordinate dx e dy.
      *
-     * @return la coordinata Y.
+     * @return una stringa che rappresenta l'oggetto Mossa.
      */
-    int getY();
-
-    /**
-     * Restituisce un array di 8 posizioni che rappresentano i vicini della posizione.
-     *
-     * @return un array di 8 posizioni.
-     */
-    public IPosizione[] getOttoVicini();
-
+    @Override
+    public String toString() {
+        return "Mossa(" + dx + ", " + dy + ")";
+    }
 }

@@ -30,7 +30,9 @@ package it.unicam.cs.formula1.api.Giocatori;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Questa classe rappresenta un giocatore umano.
@@ -39,6 +41,8 @@ public class GiocatoreUmano implements IGiocatore{
 
     private final char simbolo;
     private IPosizione posizioneAttuale;
+    private Mossa puntoPrincipale;
+    //DEVO AGGIUNGERE IL CONCETTO DI PUNTO PRINCIPALE
 
     /**
      * Costruttore che crea un giocatore umano.
@@ -48,6 +52,7 @@ public class GiocatoreUmano implements IGiocatore{
     public GiocatoreUmano(char simbolo){
         this.simbolo = simbolo;
         this.posizioneAttuale = null;
+        this.puntoPrincipale = new Mossa(0, 0);
     }
 
     /**
@@ -60,15 +65,6 @@ public class GiocatoreUmano implements IGiocatore{
         return simbolo;
     }
 
-    /**
-     * Imposta la posizione attuale del giocatore.
-     *
-     * @param posizioneAttuale la posizione attuale del giocatore.
-     */
-    @Override
-    public void setPosizioneAttuale(IPosizione posizioneAttuale) {
-        this.posizioneAttuale = posizioneAttuale;
-    }
 
     /**
      * Ritorna la posizione attuale del giocatore.
@@ -81,6 +77,38 @@ public class GiocatoreUmano implements IGiocatore{
     }
 
     /**
+     * Ritorna il punto principale del giocatore.
+     *
+     * @return il punto principale del giocatore.
+     */
+    @Override
+    public Mossa getPuntoPrincipale() {
+        return puntoPrincipale;
+    }
+
+
+    /**
+     * Imposta la posizione attuale del giocatore.
+     *
+     * @param posizioneAttuale la posizione attuale del giocatore.
+     */
+    @Override
+    public void setPosizioneAttuale(IPosizione posizioneAttuale) {
+        this.posizioneAttuale = posizioneAttuale;
+    }
+
+    /**
+     * Imposta il punto principale del giocatore.
+     *
+     * @param puntoPrincipale il punto principale del giocatore.
+     */
+    @Override
+    public void setPuntoPrincipale(Mossa puntoPrincipale) {
+        this.puntoPrincipale = puntoPrincipale;
+    }
+
+
+    /**
      * Ritorna la prossima mossa del giocatore.
      *
      * @param circuito
@@ -89,6 +117,8 @@ public class GiocatoreUmano implements IGiocatore{
      */
     @Override
     public IPosizione ProssimaMossa(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
+        List<IPosizione> posizioniPossibili = getPosizioniRaggiungibili(circuito, posizioniGiocatori);
+        //devo scegliere tramite input utente la prossima posizione in cui vuole andare
         return null;
     }
 
@@ -100,8 +130,15 @@ public class GiocatoreUmano implements IGiocatore{
      * @return le posizioni raggiungibili dal giocatore.
      */
     @Override
-    public IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
-        return new IPosizione[0];
+    public List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
+        IPosizione[] ottoVicini = posizioneAttuale.getOttoVicini();
+        List<IPosizione> posizioniPossibili = new ArrayList<>();
+        for (IPosizione posizione : ottoVicini) {
+            if(circuito.isInsideCircuit(posizione) && !posizioniGiocatori.contains(posizione)){
+                posizioniPossibili.add(posizione);
+            }
+        }
+        return posizioniPossibili;
     }
 
 

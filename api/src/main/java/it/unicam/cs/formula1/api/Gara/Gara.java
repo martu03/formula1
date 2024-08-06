@@ -88,6 +88,14 @@ public class Gara implements IGara{
      */
     @Override
     public void avanzaTurno() {
+        for (IGiocatore giocatore : giocatori) {
+            IPosizione posizione = giocatore.ProssimaMossa(circuito, posizioniGiocatori);
+            giocatore.setPosizioneAttuale(posizione);
+            if (garaTerminata()) {
+                getVincitore();
+                break;
+            }
+        }
 
     }
 
@@ -98,6 +106,11 @@ public class Gara implements IGara{
      */
     @Override
     public boolean garaTerminata() {
+        for(IGiocatore giocatore : giocatori){
+            if(circuito.isInsideEndLine(giocatore.getPosizioneAttuale())){
+                return true;
+            }
+        }
         return false;
     }
 

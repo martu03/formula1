@@ -46,17 +46,32 @@ public interface IGiocatore {
     char getSimbolo();
 
     /**
-     * Imposta la posizione attuale del giocatore.
-     *
-     * @param posizioneAttuale la posizione attuale del giocatore.
-     */
-    void setPosizioneAttuale(IPosizione posizioneAttuale);
-    /**
      * Ritorna la posizione attuale del giocatore.
      *
      * @return la posizione attuale del giocatore.
      */
     IPosizione getPosizioneAttuale();
+
+    /**
+     * Ritorna il punto principale del giocatore.
+     *
+     * @return il punto principale del giocatore.
+     */
+    Mossa getPuntoPrincipale();
+
+    /**
+     * Imposta la posizione attuale del giocatore.
+     *
+     * @param posizioneAttuale la posizione attuale del giocatore.
+     */
+    void setPosizioneAttuale(IPosizione posizioneAttuale);
+
+    /**
+     * Imposta il punto principale del giocatore.
+     *
+     * @param puntoPrincipale il punto principale del giocatore.
+     */
+    void setPuntoPrincipale(Mossa puntoPrincipale);
 
     /**
      * Ritorna la prossima mossa del giocatore.
@@ -74,5 +89,5 @@ public interface IGiocatore {
      * @param posizioniGiocatori
      * @return le posizioni raggiungibili dal giocatore.
      */
-    IPosizione[] getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori);
+    List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori);
 }
