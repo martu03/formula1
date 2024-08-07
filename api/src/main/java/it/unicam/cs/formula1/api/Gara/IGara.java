@@ -47,18 +47,11 @@ public interface IGara {
     void avanzaTurno();
 
     /**
-     * Verifica se la gara è terminata.
-     *
-     * @return true se la gara è terminata, false altrimenti.
-     */
-    boolean garaTerminata();
-
-    /**
      * Restituisce il giocatore vincitore, se c'è.
      *
      * @return il giocatore vincitore, o null se non c'è ancora un vincitore.
      */
-    IGiocatore getVincitore();
+    void Vincitore();
 
     /**
      * Restituisce la lista dei giocatori che partecipano alla gara.

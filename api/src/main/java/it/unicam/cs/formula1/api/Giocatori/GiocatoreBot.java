@@ -111,12 +111,8 @@ public class GiocatoreBot implements IGiocatore{
      * @return la prossima mossa del giocatore.
      */
     @Override
-    public IPosizione ProssimaMossa(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
+    public IPosizione ProssimaPosizione(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
         List<IPosizione> posizioniPossibili = getPosizioniRaggiungibili(circuito, posizioniGiocatori);
-
-        if (posizioniPossibili.isEmpty()) {
-            return posizioneAttuale; // Se non ci sono mosse possibili, ritorna la posizione attuale
-        }
 
         Random random = new Random();
         int sceltaRandom = random.nextInt(posizioniPossibili.size());

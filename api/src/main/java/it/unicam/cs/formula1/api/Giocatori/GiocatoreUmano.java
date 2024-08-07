@@ -116,10 +116,31 @@ public class GiocatoreUmano implements IGiocatore{
      * @return la prossima mossa del giocatore.
      */
     @Override
-    public IPosizione ProssimaMossa(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
+    public IPosizione ProssimaPosizione(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
         List<IPosizione> posizioniPossibili = getPosizioniRaggiungibili(circuito, posizioniGiocatori);
-        //devo scegliere tramite input utente la prossima posizione in cui vuole andare
-        return null;
+
+        System.out.println("Scegli la prossima posizione tra le seguenti opzioni:");
+        for (int i = 0; i < posizioniPossibili.size(); i++) {
+            System.out.println(i + ": " + posizioniPossibili.get(i));
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        int scelta = -1;
+
+        while (scelta < 0 || scelta >= posizioniPossibili.size()) {
+            System.out.print("Inserisci il numero della posizione scelta: ");
+            if (scanner.hasNextInt()) {
+                scelta = scanner.nextInt();
+                if (scelta < 0 || scelta >= posizioniPossibili.size()) {
+                    System.out.println("Scelta non valida. Scegli un numero tra 0 e " + (posizioniPossibili.size() - 1));
+                }
+            } else {
+                System.out.println("Input non valido, scegli un'altro numero.");
+                scanner.next();
+            }
+        }
+
+        return posizioniPossibili.get(scelta);
     }
 
     /**

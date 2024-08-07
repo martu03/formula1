@@ -27,10 +27,9 @@
  */
 package it.unicam.cs.formula1.api.Posizione;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Questa classe rappresenta una posizione all'interno del circuito di Formula 1.
@@ -77,14 +76,17 @@ public class Posizione implements IPosizione{
      */
     @Override
     public IPosizione[] getOttoVicini() {
-        List<IPosizione> vicini = Arrays.stream(new int[]{-1, 0, 1})//creo stream di int
-                .boxed()                                            //trasformo in stream di Integer
-                .flatMap(dx -> Arrays.stream(new int[]{-1, 0, 1}) //creo stream di int
-                        .filter(dy -> dx != 0 || dy != 0)         //filtro la posizione centrale
-                        .mapToObj(dy -> new Posizione(this.x + dx, this.y + dy))) //creo Posizioni
-                .collect(Collectors.toList());                    //creo lista di Posizioni
+        int[] valori = {-1, 0, 1};
+        List<IPosizione> ottoVicini = new ArrayList<>();
 
-        return vicini.toArray(new IPosizione[0]);
+        for (int dx : valori) {
+            for (int dy : valori) {
+                if (dx != 0 || dy != 0) {
+                    ottoVicini.add(new Posizione(this.x + dx, this.y + dy));
+                }
+            }
+        }
+        return ottoVicini.toArray(new IPosizione[0]);
     }
 
     /**

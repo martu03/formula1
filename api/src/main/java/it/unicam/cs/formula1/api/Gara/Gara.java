@@ -34,6 +34,7 @@ import it.unicam.cs.formula1.api.Posizione.Posizione;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Questa classe rappresenta una gara di Formula 1, ovvero una partita del gioco
@@ -43,6 +44,7 @@ public class Gara implements IGara{
     private final ICircuito circuito;
     private final List<IGiocatore> giocatori;
     private final List<IPosizione> posizioniGiocatori;
+    private boolean garaTerminata;
     private IGiocatore vincitore;
 
     /**
@@ -54,6 +56,7 @@ public class Gara implements IGara{
     public Gara(ICircuito circuito, List<IGiocatore> giocatori) {
         this.circuito = circuito;
         this.giocatori = giocatori;
+        this.garaTerminata = false;
         this.posizioniGiocatori = new ArrayList<>();
 
         List<IPosizione> startLinePositions = new ArrayList<>(circuito.getStartLine());
@@ -62,14 +65,22 @@ public class Gara implements IGara{
             throw new IllegalArgumentException("Non ci sono abbastanza posizioni di partenza per tutti i giocatori.");
         }
 
-        for (int i = 0; i < giocatori.size(); i++) {
+        inserisciGiocatoriStartLine(startLinePositions);
+        this.vincitore = null;
+    }
+
+    /**
+     * Inserisce i giocatori nella linea di partenza del circuito.
+     *
+     * @param startLinePositions la lista delle posizioni di partenza.
+     */
+    private void inserisciGiocatoriStartLine(List<IPosizione> startLinePositions) {
+        IntStream.range(0, giocatori.size()).forEach(i -> {
             IGiocatore giocatore = giocatori.get(i);
             IPosizione posizioneGiocatore = startLinePositions.get(i);
             posizioniGiocatori.add(posizioneGiocatore);
             giocatore.setPosizioneAttuale(posizioneGiocatore);
-        }
-
-        this.vincitore = null;
+        });
     }
 
     /**
@@ -77,10 +88,11 @@ public class Gara implements IGara{
      */
     @Override
     public void avviaGara() {
-        while (!garaTerminata()) {
+        while (!garaTerminata) {
             avanzaTurno();
             stampaStatoGara();
         }
+        Vincitore();
     }
 
     /**
@@ -89,30 +101,20 @@ public class Gara implements IGara{
     @Override
     public void avanzaTurno() {
         for (IGiocatore giocatore : giocatori) {
-            IPosizione posizione = giocatore.ProssimaMossa(circuito, posizioniGiocatori);
+            posizioniGiocatori.remove(giocatore.getPosizioneAttuale());
+            IPosizione posizione = giocatore.ProssimaPosizione(circuito, posizioniGiocatori);
             giocatore.setPosizioneAttuale(posizione);
-            if (garaTerminata()) {
-                getVincitore();
+            posizioniGiocatori.add(posizione);
+
+            if (circuito.isInsideEndLine(posizione)) {
+                vincitore = giocatore;
+                garaTerminata = true;
                 break;
             }
         }
 
     }
 
-    /**
-     * Verifica se la gara è terminata.
-     *
-     * @return true se la gara è terminata, false altrimenti.
-     */
-    @Override
-    public boolean garaTerminata() {
-        for(IGiocatore giocatore : giocatori){
-            if(circuito.isInsideEndLine(giocatore.getPosizioneAttuale())){
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Restituisce il giocatore vincitore, se c'è.
@@ -120,8 +122,8 @@ public class Gara implements IGara{
      * @return il giocatore vincitore, o null se non c'è ancora un vincitore.
      */
     @Override
-    public IGiocatore getVincitore() {
-        return null;
+    public void Vincitore() {
+        System.out.println("Il vincitore è: " + vincitore);
     }
 
     /**
@@ -131,7 +133,7 @@ public class Gara implements IGara{
      */
     @Override
     public List<IGiocatore> getGiocatori() {
-        return List.of();
+        return giocatori;
     }
 
     /**
@@ -144,7 +146,7 @@ public class Gara implements IGara{
 
         char[][] griglia = stampaPista(larghezza, altezza);
 
-        griglia = inserisciGiocatori(griglia, circuito);
+        griglia = inserisciGiocatori(griglia);
         stampaGriglia(griglia);
     }
 
@@ -181,9 +183,8 @@ public class Gara implements IGara{
      * Inserisce i giocatori nella griglia di gioco.
      *
      * @param griglia la griglia di gioco.
-     * @param circuito il circuito di gioco.
      */
-    private char[][] inserisciGiocatori(char[][] griglia, ICircuito circuito) {
+    private char[][] inserisciGiocatori(char[][] griglia) {
         for (IGiocatore giocatore : giocatori) {
             IPosizione posizione = giocatore.getPosizioneAttuale();
             int x = posizione.getX();

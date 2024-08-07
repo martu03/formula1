@@ -28,6 +28,7 @@
 package it.unicam.cs.formula1.api.Circuito;
 
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
+
 import java.util.Set;
 
 /**

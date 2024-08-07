@@ -80,7 +80,7 @@ public interface IGiocatore {
      * @param posizioniGiocatori
      * @return la prossima mossa del giocatore.
      */
-    IPosizione ProssimaMossa(ICircuito circuito, List<IPosizione> posizioniGiocatori);
+    IPosizione ProssimaPosizione(ICircuito circuito, List<IPosizione> posizioniGiocatori);
 
     /**
      * Ritorna le posizioni raggiungibili dal giocatore.
