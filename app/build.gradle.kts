@@ -13,5 +13,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = "it.unicam.cs.formula1.app.prova"
+    mainClass = "it.unicam.cs.formula1.app.Main"
 }

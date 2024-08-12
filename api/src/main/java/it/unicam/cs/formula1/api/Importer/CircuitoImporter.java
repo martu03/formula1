@@ -41,14 +41,14 @@ import java.util.Set;
 /**
  * Classe che rappresenta un importatore di circuiti.
  */
-public class CircuitoImporter implements ICircuitoImporter{
+public class CircuitoImporter {
     /**
      * Importa un circuito da un file.
      *
      * @param nomeFile il nome del file da cui importare il circuito
      * @return il circuito importato
      */
-    @Override
+
     public ICircuito importaCircuito(String nomeFile) throws IOException {
         Set<IPosizione> posizioni = new HashSet<>();
         Set<IPosizione> startLine = new HashSet<>();

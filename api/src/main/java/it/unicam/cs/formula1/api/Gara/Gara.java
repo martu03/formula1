@@ -45,7 +45,7 @@ public class Gara implements IGara{
     private final List<IGiocatore> giocatori;
     private final List<IPosizione> posizioniGiocatori;
     private boolean garaTerminata;
-    private IGiocatore vincitore;
+    private char vincitore;
 
     /**
      * Costruttore per inizializzare una gara con un circuito e una lista di giocatori.
@@ -66,7 +66,7 @@ public class Gara implements IGara{
         }
 
         inserisciGiocatoriStartLine(startLinePositions);
-        this.vincitore = null;
+        this.vincitore = ' ';
     }
 
     /**
@@ -107,7 +107,7 @@ public class Gara implements IGara{
             posizioniGiocatori.add(posizione);
 
             if (circuito.isInsideEndLine(posizione)) {
-                vincitore = giocatore;
+                vincitore = giocatore.getSimbolo();
                 garaTerminata = true;
                 break;
             }
@@ -141,9 +141,10 @@ public class Gara implements IGara{
      */
     @Override
     public void stampaStatoGara() {
-        int larghezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getX).max().orElse(0);
-        int altezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getY).max().orElse(0);
-
+        //int larghezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getX).max().orElse(0);
+        //int altezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getY).max().orElse(0);
+        int altezza = 10;
+        int larghezza = 10;
         char[][] griglia = stampaPista(larghezza, altezza);
 
         griglia = inserisciGiocatori(griglia);

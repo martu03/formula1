@@ -124,9 +124,11 @@ public class GiocatoreUmano implements IGiocatore{
             System.out.println(i + ": " + posizioniPossibili.get(i));
         }
 
-        Scanner scanner = new Scanner(System.in);
-        int scelta = -1;
 
+        Scanner scanner = new Scanner(System.in);
+        int scelta = 0;
+
+        /*
         while (scelta < 0 || scelta >= posizioniPossibili.size()) {
             System.out.print("Inserisci il numero della posizione scelta: ");
             if (scanner.hasNextInt()) {
@@ -139,6 +141,7 @@ public class GiocatoreUmano implements IGiocatore{
                 scanner.next();
             }
         }
+        */
 
         return posizioniPossibili.get(scelta);
     }

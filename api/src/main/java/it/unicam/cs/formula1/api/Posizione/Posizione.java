@@ -77,16 +77,18 @@ public class Posizione implements IPosizione{
     @Override
     public IPosizione[] getOttoVicini() {
         int[] valori = {-1, 0, 1};
-        List<IPosizione> ottoVicini = new ArrayList<>();
+        Posizione[] ottoVicini = new Posizione[8];
+        int index = 0;
 
         for (int dx : valori) {
             for (int dy : valori) {
-                if (dx != 0 || dy != 0) {
-                    ottoVicini.add(new Posizione(this.x + dx, this.y + dy));
+                if (dx != 0 || dy != 0) {  // Escludi la posizione centrale
+                    ottoVicini[index] =  new Posizione(this.x + dx, this.y + dy);;
+                    index++;
                 }
             }
         }
-        return ottoVicini.toArray(new IPosizione[0]);
+        return ottoVicini;  // Restituisci l'array
     }
 
     /**

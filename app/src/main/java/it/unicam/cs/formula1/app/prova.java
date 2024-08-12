@@ -29,6 +29,7 @@ package it.unicam.cs.formula1.app;
 
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Gara.Gara;
+import it.unicam.cs.formula1.api.Giocatori.GiocatoreBot;
 import it.unicam.cs.formula1.api.Giocatori.GiocatoreUmano;
 import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
 import it.unicam.cs.formula1.api.Importer.BotImporter;
@@ -44,9 +45,9 @@ import java.util.List;
 
 public class prova {
     public static void main(String[] args) {
-
+        /*
         ICircuito circuito = null;
-        List<IGiocatore> giocatori = null;
+        List<GiocatoreBot> giocatori = null;
         //importa tracciato
         try {
             CircuitoImporter importer = new CircuitoImporter();
@@ -63,12 +64,12 @@ public class prova {
             System.err.println("Errore durante l'importazione del circuito: " + e.getMessage());
         }
 
-        Gara gara = new Gara(circuito, giocatori);
+        //Gara gara = new Gara(circuito, giocatori);
 
-        gara.stampaStatoGara();
+        //gara.stampaStatoGara();
 
 
-
+        */
 
     }
 }

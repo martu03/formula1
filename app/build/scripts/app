@@ -210,7 +210,7 @@ DEFAULT_JVM_OPTS=""
 
 set -- \
         -classpath "$CLASSPATH" \
-        it.unicam.cs.formula1.app.prova \
+        it.unicam.cs.formula1.app.Main \
         "$@"
 
 # Stop when "xargs" is not available.

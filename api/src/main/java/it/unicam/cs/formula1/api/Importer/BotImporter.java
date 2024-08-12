@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BotImporter implements IBotImporter{
+public class BotImporter {
 
     /**
      * Importa i bot del gioco da un file.
@@ -44,7 +44,7 @@ public class BotImporter implements IBotImporter{
      * @param nomeFile il nome del file da cui importare i bot
      * @return la lista dei bot importati
      */
-    @Override
+
     public List<IGiocatore> importaBot(String nomeFile) throws IOException {
         List<IGiocatore> giocatoriBot = new ArrayList<>();
 
@@ -53,8 +53,8 @@ public class BotImporter implements IBotImporter{
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (!line.isEmpty()) {
-                    char simbolo = line.charAt(0);
-                    GiocatoreBot giocatore = new GiocatoreBot(simbolo);
+                    char symbology = line.charAt(0);
+                    GiocatoreBot giocatore = new GiocatoreBot(symbology);
                     giocatoriBot.add(giocatore);
                 }
             }
