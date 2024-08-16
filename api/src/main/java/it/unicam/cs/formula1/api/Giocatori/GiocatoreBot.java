@@ -29,6 +29,7 @@ package it.unicam.cs.formula1.api.Giocatori;
 
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
+import it.unicam.cs.formula1.api.Posizione.Posizione;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,8 @@ public class GiocatoreBot implements IGiocatore{
 
     private final char simbolo;
     private IPosizione posizioneAttuale;
-    private Mossa puntoPrinciale;
-    //DEVO AGGIUNGERE IL CONCETTO DI PUNTO PRINCIPALE
+    private IPosizione puntoPrincipale;
+    private Mossa ultimaMossa;
 
     /**
      * Costruttore che crea un giocatore robot.
@@ -49,7 +50,8 @@ public class GiocatoreBot implements IGiocatore{
     public GiocatoreBot(char simbolo){
         this.simbolo = simbolo;
         this.posizioneAttuale = null;
-        this.puntoPrinciale = new Mossa(0, 0);
+        this.puntoPrincipale = new Posizione(0, 0);
+        this.ultimaMossa = new Mossa(0, 0);
     }
 
     /**
@@ -79,9 +81,8 @@ public class GiocatoreBot implements IGiocatore{
      */
     @Override
     public Mossa getUltimaMossa() {
-        return puntoPrinciale;
+        return ultimaMossa;
     }
-
     /**
      * Imposta la posizione attuale del giocatore.
      *
@@ -99,9 +100,8 @@ public class GiocatoreBot implements IGiocatore{
      */
     @Override
     public void setUltimaMossa(Mossa ultimaMossa) {
-        this.puntoPrinciale = ultimaMossa;
+        this.ultimaMossa = ultimaMossa;
     }
-
 
     /**
      * Ritorna la prossima mossa del giocatore.
@@ -129,14 +129,48 @@ public class GiocatoreBot implements IGiocatore{
      */
     @Override
     public List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
-        IPosizione[] ottoVicini = posizioneAttuale.getOttoVicini();
+        this.setPuntoPrincipale();
+        IPosizione[] ottoVicini = null;
+        if(circuito.isInsideCircuit(puntoPrincipale))
+            ottoVicini = puntoPrincipale.getOttoVicini();
+        else
+            ottoVicini = posizioneAttuale.getOttoVicini();
+
         List<IPosizione> posizioniPossibili = new ArrayList<>();
         for (IPosizione posizione : ottoVicini) {
-            if(circuito.isInsideCircuit(posizione) && !posizioniGiocatori.contains(posizione)){
+            if(circuito.isInsideCircuit(posizione) && !(posizioniGiocatori.contains(posizione)) ){
                 posizioniPossibili.add(posizione);
             }
         }
+
+        if(!this.puntoPrincipale.equals(posizioneAttuale)) {
+            posizioniPossibili.add(puntoPrincipale);
+            posizioniPossibili.remove(posizioneAttuale);
+        }
         return posizioniPossibili;
+    }
+
+    /**
+     * Imposta il punto principale del giocatore.
+     */
+    private void setPuntoPrincipale() {
+        int x = this.posizioneAttuale.getX() + this.ultimaMossa.getDx();
+        int y = this.posizioneAttuale.getY() + this.ultimaMossa.getDy();
+
+        this.puntoPrincipale.setX(x);
+        this.puntoPrincipale.setY(y);
+    }
+
+    /**
+     * Imposta l'ultima mossa del giocatore.
+     *
+     * @param posizioneScelta la posizione scelta dal giocatore.
+     */
+    private void setultimaMossa(IPosizione posizioneScelta) {
+        int dx = posizioneScelta.getX() - this.posizioneAttuale.getX();
+        int dy = posizioneScelta.getY() - this.posizioneAttuale.getY();
+
+        this.ultimaMossa.setMossa(dx, dy);
     }
 
 }

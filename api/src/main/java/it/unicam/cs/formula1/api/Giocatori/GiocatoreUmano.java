@@ -44,7 +44,6 @@ public class GiocatoreUmano implements IGiocatore{
     private IPosizione posizioneAttuale;
     private IPosizione puntoPrincipale;
     private Mossa ultimaMossa;
-    //DEVO AGGIUNGERE IL CONCETTO DI PUNTO PRINCIPALE
 
     /**
      * Costruttore che crea un giocatore umano.
@@ -183,6 +182,9 @@ public class GiocatoreUmano implements IGiocatore{
         return posizioniPossibili;
     }
 
+    /**
+     * Imposta il punto principale del giocatore.
+     */
     private void setPuntoPrincipale() {
         int x = this.posizioneAttuale.getX() + this.ultimaMossa.getDx();
         int y = this.posizioneAttuale.getY() + this.ultimaMossa.getDy();
@@ -191,6 +193,11 @@ public class GiocatoreUmano implements IGiocatore{
         this.puntoPrincipale.setY(y);
     }
 
+    /**
+     * Imposta l'ultima mossa del giocatore.
+     *
+     * @param posizioneScelta la posizione scelta dal giocatore.
+     */
     private void setultimaMossa(IPosizione posizioneScelta) {
         int dx = posizioneScelta.getX() - this.posizioneAttuale.getX();
         int dy = posizioneScelta.getY() - this.posizioneAttuale.getY();
