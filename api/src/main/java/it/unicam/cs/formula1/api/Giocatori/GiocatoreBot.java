@@ -78,7 +78,7 @@ public class GiocatoreBot implements IGiocatore{
      * @return il punto principale del giocatore.
      */
     @Override
-    public Mossa getPuntoPrincipale() {
+    public Mossa getUltimaMossa() {
         return puntoPrinciale;
     }
 
@@ -95,11 +95,11 @@ public class GiocatoreBot implements IGiocatore{
     /**
      * Imposta il punto principale del giocatore.
      *
-     * @param puntoPrincipale il punto principale del giocatore.
+     * @param ultimaMossa il punto principale del giocatore.
      */
     @Override
-    public void setPuntoPrincipale(Mossa puntoPrincipale) {
-        this.puntoPrinciale = puntoPrincipale;
+    public void setUltimaMossa(Mossa ultimaMossa) {
+        this.puntoPrinciale = ultimaMossa;
     }
 
 

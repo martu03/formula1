@@ -90,7 +90,6 @@ public class Gara implements IGara{
     public void avviaGara() {
         while (!garaTerminata) {
             avanzaTurno();
-            stampaStatoGara();
         }
         Vincitore();
     }
@@ -101,10 +100,16 @@ public class Gara implements IGara{
     @Override
     public void avanzaTurno() {
         for (IGiocatore giocatore : giocatori) {
+            stampaStatoGara();
+            System.out.println("------------------------------------------------------------");
+
             posizioniGiocatori.remove(giocatore.getPosizioneAttuale());
             IPosizione posizione = giocatore.ProssimaPosizione(circuito, posizioniGiocatori);
             giocatore.setPosizioneAttuale(posizione);
             posizioniGiocatori.add(posizione);
+
+            //stampaStatoGara();
+            //System.out.println("------------------------------------------------------------");
 
             if (circuito.isInsideEndLine(posizione)) {
                 vincitore = giocatore.getSimbolo();

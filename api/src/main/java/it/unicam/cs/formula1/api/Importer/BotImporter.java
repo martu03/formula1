@@ -45,7 +45,7 @@ public class BotImporter {
      * @return la lista dei bot importati
      */
 
-    public List<IGiocatore> importaBot(String nomeFile) throws IOException {
+    public static List<IGiocatore> importaBot(String nomeFile) throws IOException {
         List<IGiocatore> giocatoriBot = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeFile))) {

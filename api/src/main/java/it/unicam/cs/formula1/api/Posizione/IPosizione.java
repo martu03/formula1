@@ -54,4 +54,17 @@ public interface IPosizione {
      */
     public IPosizione[] getOttoVicini();
 
+    /**
+     * Imposta la coordinata X della posizione.
+     *
+     * @param x La coordinata X.
+     */
+    void setX(int x);
+
+    /**
+     * Imposta la coordinata Y della posizione.
+     *
+     * @param y La coordinata Y.
+     */
+    void setY(int y);
 }

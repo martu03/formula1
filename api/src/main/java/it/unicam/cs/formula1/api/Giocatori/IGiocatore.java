@@ -30,7 +30,6 @@ package it.unicam.cs.formula1.api.Giocatori;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ public interface IGiocatore {
      *
      * @return il punto principale del giocatore.
      */
-    Mossa getPuntoPrincipale();
+    Mossa getUltimaMossa();
 
     /**
      * Imposta la posizione attuale del giocatore.
@@ -69,9 +68,9 @@ public interface IGiocatore {
     /**
      * Imposta il punto principale del giocatore.
      *
-     * @param puntoPrincipale il punto principale del giocatore.
+     * @param ultimaMossa il punto principale del giocatore.
      */
-    void setPuntoPrincipale(Mossa puntoPrincipale);
+    void setUltimaMossa(Mossa ultimaMossa);
 
     /**
      * Ritorna la prossima mossa del giocatore.

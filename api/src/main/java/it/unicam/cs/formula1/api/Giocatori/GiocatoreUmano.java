@@ -29,6 +29,7 @@ package it.unicam.cs.formula1.api.Giocatori;
 
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
+import it.unicam.cs.formula1.api.Posizione.Posizione;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,8 @@ public class GiocatoreUmano implements IGiocatore{
 
     private final char simbolo;
     private IPosizione posizioneAttuale;
-    private Mossa puntoPrincipale;
+    private IPosizione puntoPrincipale;
+    private Mossa ultimaMossa;
     //DEVO AGGIUNGERE IL CONCETTO DI PUNTO PRINCIPALE
 
     /**
@@ -52,7 +54,8 @@ public class GiocatoreUmano implements IGiocatore{
     public GiocatoreUmano(char simbolo){
         this.simbolo = simbolo;
         this.posizioneAttuale = null;
-        this.puntoPrincipale = new Mossa(0, 0);
+        this.puntoPrincipale = new Posizione(0, 0);
+        this.ultimaMossa = new Mossa(0, 0);
     }
 
     /**
@@ -82,8 +85,8 @@ public class GiocatoreUmano implements IGiocatore{
      * @return il punto principale del giocatore.
      */
     @Override
-    public Mossa getPuntoPrincipale() {
-        return puntoPrincipale;
+    public Mossa getUltimaMossa() {
+        return ultimaMossa;
     }
 
 
@@ -100,11 +103,11 @@ public class GiocatoreUmano implements IGiocatore{
     /**
      * Imposta il punto principale del giocatore.
      *
-     * @param puntoPrincipale il punto principale del giocatore.
+     * @param ultimaMossa il punto principale del giocatore.
      */
     @Override
-    public void setPuntoPrincipale(Mossa puntoPrincipale) {
-        this.puntoPrincipale = puntoPrincipale;
+    public void setUltimaMossa(Mossa ultimaMossa) {
+        this.ultimaMossa = ultimaMossa;
     }
 
 
@@ -117,32 +120,36 @@ public class GiocatoreUmano implements IGiocatore{
      */
     @Override
     public IPosizione ProssimaPosizione(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
+        // Ottiene le posizioni raggiungibili
         List<IPosizione> posizioniPossibili = getPosizioniRaggiungibili(circuito, posizioniGiocatori);
 
-        System.out.println("Scegli la prossima posizione tra le seguenti opzioni:");
+        // Mostra le posizioni possibili all'utente
+        System.out.println("Seleziona la prossima posizione tra le seguenti:");
         for (int i = 0; i < posizioniPossibili.size(); i++) {
             System.out.println(i + ": " + posizioniPossibili.get(i));
         }
 
-
+        // Crea uno scanner per ricevere l'input dell'utente
         Scanner scanner = new Scanner(System.in);
-        int scelta = 0;
+        int scelta = -1;
 
-        /*
+        // Loop per ottenere un input valido dall'utente
         while (scelta < 0 || scelta >= posizioniPossibili.size()) {
             System.out.print("Inserisci il numero della posizione scelta: ");
+            // Controlla se l'input è un intero valido
             if (scanner.hasNextInt()) {
                 scelta = scanner.nextInt();
                 if (scelta < 0 || scelta >= posizioniPossibili.size()) {
-                    System.out.println("Scelta non valida. Scegli un numero tra 0 e " + (posizioniPossibili.size() - 1));
+                    System.out.println("Scelta non valida. Riprova.");
                 }
             } else {
-                System.out.println("Input non valido, scegli un'altro numero.");
-                scanner.next();
+                System.out.println("Input non valido. Inserisci un numero.");
+                scanner.next(); // Scarta l'input non valido
             }
         }
-        */
 
+        this.setultimaMossa(posizioniPossibili.get(scelta));
+        // Ritorna la posizione scelta dall'utente
         return posizioniPossibili.get(scelta);
     }
 
@@ -155,14 +162,40 @@ public class GiocatoreUmano implements IGiocatore{
      */
     @Override
     public List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
-        IPosizione[] ottoVicini = posizioneAttuale.getOttoVicini();
+        this.setPuntoPrincipale();
+        IPosizione[] ottoVicini = null;
+        if(circuito.isInsideCircuit(puntoPrincipale))
+            ottoVicini = puntoPrincipale.getOttoVicini();
+        else
+            ottoVicini = posizioneAttuale.getOttoVicini();
+
         List<IPosizione> posizioniPossibili = new ArrayList<>();
         for (IPosizione posizione : ottoVicini) {
-            if(circuito.isInsideCircuit(posizione) && !posizioniGiocatori.contains(posizione)){
+            if(circuito.isInsideCircuit(posizione) && !(posizioniGiocatori.contains(posizione)) ){
                 posizioniPossibili.add(posizione);
             }
         }
+
+        if(!this.puntoPrincipale.equals(posizioneAttuale)) {
+            posizioniPossibili.add(puntoPrincipale);
+            posizioniPossibili.remove(posizioneAttuale);
+        }
         return posizioniPossibili;
+    }
+
+    private void setPuntoPrincipale() {
+        int x = this.posizioneAttuale.getX() + this.ultimaMossa.getDx();
+        int y = this.posizioneAttuale.getY() + this.ultimaMossa.getDy();
+
+        this.puntoPrincipale.setX(x);
+        this.puntoPrincipale.setY(y);
+    }
+
+    private void setultimaMossa(IPosizione posizioneScelta) {
+        int dx = posizioneScelta.getX() - this.posizioneAttuale.getX();
+        int dy = posizioneScelta.getY() - this.posizioneAttuale.getY();
+
+        this.ultimaMossa.setMossa(dx, dy);
     }
 
 

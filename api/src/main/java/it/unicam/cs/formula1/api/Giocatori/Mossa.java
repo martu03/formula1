@@ -46,6 +46,35 @@ public class Mossa {
     }
 
     /**
+     * Restituisce lo spostamento destra-sinistra.
+     *
+     * @return lo spostamento destra-sinistra.
+     */
+    public int getDx() {
+        return this.dx;
+    }
+
+    /**
+     * Restituisce lo spostamento alto-basso.
+     *
+     * @return lo spostamento alto-basso.
+     */
+    public int getDy() {
+        return this.dy;
+    }
+
+    /**
+     * Imposta lo spostamento destra-sinistra e alto-basso.
+     *
+     * @param dx Spostamento destra-sinistra.
+     * @param dy Spostamento alto-basso.
+     */
+    public void setMossa(int dx, int dy){
+        this.dx = dx;
+        this.dy = dy;
+    }
+
+    /**
      * Restituisce una rappresentazione stringa dell'oggetto Mossa.
      * La stringa include le coordinate dx e dy.
      *

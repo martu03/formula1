@@ -70,6 +70,26 @@ public class Posizione implements IPosizione{
     }
 
     /**
+     * Imposta la coordinata X della posizione.
+     *
+     * @param x la coordinata X.
+     */
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * Imposta la coordinata Y della posizione.
+     *
+     * @param y la coordinata Y.
+     */
+    @Override
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
      * Restituisce un array di 8 posizioni che rappresentano i vicini della posizione.
      *
      * @return un array di 8 posizioni.

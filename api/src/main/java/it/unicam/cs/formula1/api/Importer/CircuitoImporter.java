@@ -49,7 +49,7 @@ public class CircuitoImporter {
      * @return il circuito importato
      */
 
-    public ICircuito importaCircuito(String nomeFile) throws IOException {
+    public static ICircuito importaCircuito(String nomeFile) throws IOException {
         Set<IPosizione> posizioni = new HashSet<>();
         Set<IPosizione> startLine = new HashSet<>();
         Set<IPosizione> finishLine = new HashSet<>();
