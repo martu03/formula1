@@ -29,113 +29,53 @@ package it.unicam.cs.formula1.api.Giocatori;
 
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
-import it.unicam.cs.formula1.api.Posizione.Posizione;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 /**
  * Questa classe rappresenta un giocatore umano.
  */
-public class GiocatoreUmano implements IGiocatore{
-
-    private final char simbolo;
-    private IPosizione posizioneAttuale;
-    private IPosizione puntoPrincipale;
-    private Mossa ultimaMossa;
+public class GiocatoreUmano extends GiocatoreBase {
 
     /**
-     * Costruttore che crea un giocatore umano.
+     * Costruttore che inizializza un giocatore umano con il simbolo fornito.
      *
-     * @param simbolo Simbolo associato al giocatore.
+     * @param simbolo Il simbolo del giocatore.
      */
-    public GiocatoreUmano(char simbolo){
-        this.simbolo = simbolo;
-        this.posizioneAttuale = null;
-        this.puntoPrincipale = new Posizione(0, 0);
-        this.ultimaMossa = new Mossa(0, 0);
+    public GiocatoreUmano(char simbolo) {
+        super(simbolo);
     }
-
-    /**
-     * Ritorna il simbolo associato al giocatore.
-     *
-     * @return il simbolo del giocatore.
-     */
-    @Override
-    public char getSimbolo() {
-        return simbolo;
-    }
-
-
-    /**
-     * Ritorna la posizione attuale del giocatore.
-     *
-     * @return la posizione attuale del giocatore.
-     */
-    @Override
-    public IPosizione getPosizioneAttuale() {
-        return posizioneAttuale;
-    }
-
-    /**
-     * Ritorna il punto principale del giocatore.
-     *
-     * @return il punto principale del giocatore.
-     */
-    @Override
-    public Mossa getUltimaMossa() {
-        return ultimaMossa;
-    }
-
-
-    /**
-     * Imposta la posizione attuale del giocatore.
-     *
-     * @param posizioneAttuale la posizione attuale del giocatore.
-     */
-    @Override
-    public void setPosizioneAttuale(IPosizione posizioneAttuale) {
-        this.posizioneAttuale = posizioneAttuale;
-    }
-
-    /**
-     * Imposta il punto principale del giocatore.
-     *
-     * @param ultimaMossa il punto principale del giocatore.
-     */
-    @Override
-    public void setUltimaMossa(Mossa ultimaMossa) {
-        this.ultimaMossa = ultimaMossa;
-    }
-
 
     /**
      * Ritorna la prossima mossa del giocatore.
+
+     * Prima si calcolano le posizioni Possibili in cui l'utente può muoversi.
+     * Si chiede all'utente di selezionare la prossima posizione tra le posizioni possibili; questo avviene
+     * attraverso uno scanner che legge l'input dell'utente.
+     * Si modifica il valore dell'ultima mossa.
+     * Restituisce la posizione scelta dall'utente.
      *
-     * @param circuito
-     * @param posizioniGiocatori
-     * @return la prossima mossa del giocatore.
+     * @param circuito il circuito su cui si sta giocando.
+     * @param posizioniGiocatori le posizioni dei giocatori.
+     * @return la prossima posizione del giocatore.
      */
     @Override
     public IPosizione ProssimaPosizione(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
-        // Ottiene le posizioni raggiungibili
         List<IPosizione> posizioniPossibili = getPosizioniRaggiungibili(circuito, posizioniGiocatori);
 
-        // Mostra le posizioni possibili all'utente
         System.out.println("Seleziona la prossima posizione tra le seguenti:");
         for (int i = 0; i < posizioniPossibili.size(); i++) {
-            System.out.println(i + ": " + posizioniPossibili.get(i));
+            System.out.println(i + ": " + posizioniPossibili.get(i).toString());
         }
 
-        // Crea uno scanner per ricevere l'input dell'utente
         Scanner scanner = new Scanner(System.in);
         int scelta = -1;
 
         // Loop per ottenere un input valido dall'utente
         while (scelta < 0 || scelta >= posizioniPossibili.size()) {
             System.out.print("Inserisci il numero della posizione scelta: ");
-            // Controlla se l'input è un intero valido
+
             if (scanner.hasNextInt()) {
                 scelta = scanner.nextInt();
                 if (scelta < 0 || scelta >= posizioniPossibili.size()) {
@@ -143,68 +83,14 @@ public class GiocatoreUmano implements IGiocatore{
                 }
             } else {
                 System.out.println("Input non valido. Inserisci un numero.");
-                scanner.next(); // Scarta l'input non valido
+                scanner.next();
             }
         }
 
-        this.setultimaMossa(posizioniPossibili.get(scelta));
-        // Ritorna la posizione scelta dall'utente
+        this.setUltimaMossa(posizioniPossibili.get(scelta));
+
         return posizioniPossibili.get(scelta);
     }
-
-    /**
-     * Ritorna le posizioni raggiungibili dal giocatore.
-     *
-     * @param circuito
-     * @param posizioniGiocatori
-     * @return le posizioni raggiungibili dal giocatore.
-     */
-    @Override
-    public List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
-        this.setPuntoPrincipale();
-        IPosizione[] ottoVicini = null;
-        if(circuito.isInsideCircuit(puntoPrincipale))
-            ottoVicini = puntoPrincipale.getOttoVicini();
-        else
-            ottoVicini = posizioneAttuale.getOttoVicini();
-
-        List<IPosizione> posizioniPossibili = new ArrayList<>();
-        for (IPosizione posizione : ottoVicini) {
-            if(circuito.isInsideCircuit(posizione) && !(posizioniGiocatori.contains(posizione)) ){
-                posizioniPossibili.add(posizione);
-            }
-        }
-
-        if(!this.puntoPrincipale.equals(posizioneAttuale)) {
-            posizioniPossibili.add(puntoPrincipale);
-            posizioniPossibili.remove(posizioneAttuale);
-        }
-        return posizioniPossibili;
-    }
-
-    /**
-     * Imposta il punto principale del giocatore.
-     */
-    private void setPuntoPrincipale() {
-        int x = this.posizioneAttuale.getX() + this.ultimaMossa.getDx();
-        int y = this.posizioneAttuale.getY() + this.ultimaMossa.getDy();
-
-        this.puntoPrincipale.setX(x);
-        this.puntoPrincipale.setY(y);
-    }
-
-    /**
-     * Imposta l'ultima mossa del giocatore.
-     *
-     * @param posizioneScelta la posizione scelta dal giocatore.
-     */
-    private void setultimaMossa(IPosizione posizioneScelta) {
-        int dx = posizioneScelta.getX() - this.posizioneAttuale.getX();
-        int dy = posizioneScelta.getY() - this.posizioneAttuale.getY();
-
-        this.ultimaMossa.setMossa(dx, dy);
-    }
-
 
 }
 

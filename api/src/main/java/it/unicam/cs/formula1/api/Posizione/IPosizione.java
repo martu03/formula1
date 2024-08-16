@@ -28,8 +28,7 @@
 package it.unicam.cs.formula1.api.Posizione;
 
 /**
- * Questa interfaccia rappresenta il concetto di posizione, componente
- * del circuito di Formula 1.
+ * Questa classe rappresenta una posizione che compone il circuito del gioco.
  */
 public interface IPosizione {
 
@@ -52,19 +51,6 @@ public interface IPosizione {
      *
      * @return un array di 8 posizioni.
      */
-    public IPosizione[] getOttoVicini();
+    IPosizione[] getOttoVicini();
 
-    /**
-     * Imposta la coordinata X della posizione.
-     *
-     * @param x La coordinata X.
-     */
-    void setX(int x);
-
-    /**
-     * Imposta la coordinata Y della posizione.
-     *
-     * @param y La coordinata Y.
-     */
-    void setY(int y);
 }

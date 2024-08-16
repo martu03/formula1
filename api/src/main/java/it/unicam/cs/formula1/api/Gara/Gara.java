@@ -30,7 +30,6 @@ package it.unicam.cs.formula1.api.Gara;
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
 import it.unicam.cs.formula1.api.Posizione.IPosizione;
-import it.unicam.cs.formula1.api.Posizione.Posizione;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +45,13 @@ public class Gara implements IGara{
     private final List<IPosizione> posizioniGiocatori;
     private boolean garaTerminata;
     private char vincitore;
+    private IViewGara viewGara;
 
     /**
      * Costruttore per inizializzare una gara con un circuito e una lista di giocatori.
+
+     * Inizializzo tutti i campi della classe.
+     * Assegno per ogni giocatore una posizione di partenza.
      *
      * @param circuito il circuito della gara.
      * @param giocatori la lista dei giocatori che partecipano alla gara.
@@ -58,6 +61,7 @@ public class Gara implements IGara{
         this.giocatori = giocatori;
         this.garaTerminata = false;
         this.posizioniGiocatori = new ArrayList<>();
+        this.viewGara = null;
 
         List<IPosizione> startLinePositions = new ArrayList<>(circuito.getStartLine());
 
@@ -84,32 +88,59 @@ public class Gara implements IGara{
     }
 
     /**
+     * Restituisce il circuito della gara.
+     */
+    @Override
+    public ICircuito getCircuito() {
+        return circuito;
+    }
+
+    /**
+     * Restituisce i giocatori che partecipano alla gara.
+     */
+    @Override
+    public List<IGiocatore> getGiocatori() {
+        return giocatori;
+    }
+
+    /**
+     * Imposta la vista della gara.
+     *
+     * @param garaView la vista della gara.
+     */
+    public void setViewGara(ViewGara garaView) {
+        this.viewGara = garaView;
+    }
+
+    /**
      * Avvia la gara con i giocatori specificati.
+
+     * Finché la gara non è terminata, avanza il turno.
+     * Alla fine della gara, stampa il vincitore.
      */
     @Override
     public void avviaGara() {
         while (!garaTerminata) {
             avanzaTurno();
         }
-        Vincitore();
+        vincitore();
     }
 
     /**
      * Avanza la gara di un turno, facendo muovere tutti i giocatori.
+
+     * Stampo lo stato della gara.
+     * Per ogni giocatore, calcolo la prossima posizione e la setto come posizione attuale.
+     * Se un giocatore arriva alla fine del circuito, termino la gara.
      */
     @Override
     public void avanzaTurno() {
         for (IGiocatore giocatore : giocatori) {
-            stampaStatoGara();
-            System.out.println("------------------------------------------------------------");
-
+            viewGara.stampaStatoGara();
             posizioniGiocatori.remove(giocatore.getPosizioneAttuale());
             IPosizione posizione = giocatore.ProssimaPosizione(circuito, posizioniGiocatori);
             giocatore.setPosizioneAttuale(posizione);
             posizioniGiocatori.add(posizione);
-
-            //stampaStatoGara();
-            //System.out.println("------------------------------------------------------------");
 
             if (circuito.isInsideEndLine(posizione)) {
                 vincitore = giocatore.getSimbolo();
@@ -122,95 +153,10 @@ public class Gara implements IGara{
 
 
     /**
-     * Restituisce il giocatore vincitore, se c'è.
-     *
-     * @return il giocatore vincitore, o null se non c'è ancora un vincitore.
+     * Restituisce il giocatore vincitore.
      */
     @Override
-    public void Vincitore() {
+    public void vincitore() {
         System.out.println("Il vincitore è: " + vincitore);
-    }
-
-    /**
-     * Restituisce la lista dei giocatori che partecipano alla gara.
-     *
-     * @return la lista dei giocatori.
-     */
-    @Override
-    public List<IGiocatore> getGiocatori() {
-        return giocatori;
-    }
-
-    /**
-     * Stampa lo stato attuale del circuito con le posizioni dei giocatori.
-     */
-    @Override
-    public void stampaStatoGara() {
-        //int larghezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getX).max().orElse(0);
-        //int altezza = circuito.getAllPositions().stream().mapToInt(IPosizione::getY).max().orElse(0);
-        int altezza = 10;
-        int larghezza = 10;
-        char[][] griglia = stampaPista(larghezza, altezza);
-
-        griglia = inserisciGiocatori(griglia);
-        stampaGriglia(griglia);
-    }
-
-    /**
-     * Inizializza la griglia di gioco con tutti 0.
-     *
-     * @param larghezza la larghezza della griglia.
-     * @param altezza l'altezza della griglia.
-     * @return la griglia di gioco inizializzata.
-     */
-    private char[][] stampaPista(int larghezza, int altezza) {
-        char[][] griglia = new char[altezza][larghezza];
-
-        for (int y = 0; y < altezza; y++) {
-            for (int x = 0; x < larghezza; x++) {
-                IPosizione posizione = new Posizione(x, y);
-                if (circuito.isInsideCircuit(posizione)) {
-                    if (circuito.isInsideStartLine(posizione)) {
-                        griglia[y][x] = 'S'; // Posizione di partenza
-                    } else if (circuito.isInsideEndLine(posizione)) {
-                        griglia[y][x] = 'E'; // Posizione di arrivo
-                    } else {
-                        griglia[y][x] = '1'; // Posizione della pista
-                    }
-                } else {
-                    griglia[y][x] = '0'; // Posizione fuori pista
-                }
-            }
-        }
-        return griglia;
-    }
-
-    /**
-     * Inserisce i giocatori nella griglia di gioco.
-     *
-     * @param griglia la griglia di gioco.
-     */
-    private char[][] inserisciGiocatori(char[][] griglia) {
-        for (IGiocatore giocatore : giocatori) {
-            IPosizione posizione = giocatore.getPosizioneAttuale();
-            int x = posizione.getX();
-            int y = posizione.getY();
-            griglia[y][x] = giocatore.getSimbolo(); // Posiziona il simbolo del giocatore sulla griglia
-        }
-        return griglia;
-    }
-
-    /**
-     * Stampa la griglia di gioco.
-     *
-     * @param griglia la griglia di gioco.
-     */
-    private void stampaGriglia(char[][] griglia) {
-        for (char[] riga : griglia) {
-            for (char cella : riga) {
-                System.out.print(cella + " "); // Stampa ogni cella con uno spazio
-            }
-            System.out.println(); // Vai a capo dopo ogni riga
-        }
     }
 }

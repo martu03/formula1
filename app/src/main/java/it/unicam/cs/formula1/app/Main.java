@@ -6,44 +6,50 @@ package it.unicam.cs.formula1.app;
 
 import it.unicam.cs.formula1.api.Circuito.ICircuito;
 import it.unicam.cs.formula1.api.Gara.Gara;
-import it.unicam.cs.formula1.api.Giocatori.GiocatoreBot;
 import it.unicam.cs.formula1.api.Giocatori.GiocatoreUmano;
 import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
 import it.unicam.cs.formula1.api.Importer.BotImporter;
 import it.unicam.cs.formula1.api.Importer.CircuitoImporter;
+import it.unicam.cs.formula1.api.Gara.ViewGara;
 
 import java.io.IOException;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-        ICircuito circuito = null;
-
-        //importa tracciato
-        try {
-            CircuitoImporter importerCircuito = new CircuitoImporter();
-            circuito = importerCircuito.importaCircuito("src/main/java/it/unicam/cs/formula1/app/circuito.txt");
-        } catch (IOException e) {
-            System.err.println("Errore durante l'importazione del circuito: " + e.getMessage());
+    public static void main(String[] args) throws IOException {
+        // Controlla se è stato passato almeno un argomento
+        if (args.length < 2) {
+            System.out.println("Usage: gradle run --args=\"<path-to-track-file> <path-to-bot-players-file>\"");
+            return;
         }
 
-        GiocatoreUmano martina = new GiocatoreUmano('M');
-        List<IGiocatore> giocatori = null;
+        // Estrae i percorsi dai parametri passati
+        String percorsoTracciato = args[0];
+        String percorsoGiocatoriBot = args[1];
 
-        //importa giocatori bot
-        try {
-            BotImporter importerBot = new BotImporter();
-            giocatori = importerBot.importaBot("src/main/java/it/unicam/cs/formula1/app/giocatori_bot.txt");
-        } catch (IOException e) {
-            System.err.println("Errore durante l'importazione del circuito: " + e.getMessage());
+        // Importa il tracciato
+        ICircuito circuito = CircuitoImporter.importaCircuito(percorsoTracciato);
+        if (circuito == null)
+            System.out.println("Errore durante l'importazione del circuito.");
+
+
+        // Importa i giocatori bot
+        List<IGiocatore> giocatori = BotImporter.importaBot(percorsoGiocatoriBot);
+        if (giocatori != null) {
+            GiocatoreUmano martina = new GiocatoreUmano('M');
+            giocatori.add(martina); // Aggiungiamo il giocatore umano
+        } else {
+            System.out.println("Errore durante l'importazione dei giocatori bot.");
+            return;
         }
 
-        giocatori.add(martina); //aggiungiamo il giocatore umano
+        // Crea la Gara
+        Gara partitaFormula1 = new Gara(circuito, giocatori); // Passa null per GaraView per ora
 
-        //creaiamo la gara
-        Gara partitaFormula1 = new Gara(circuito, giocatori);
-        partitaFormula1.stampaStatoGara(); //stampiamo lo stato iniziale della gara
-        partitaFormula1.avviaGara(); //avviamo la gara
+        // Crea l'oggetto ViewGara
+        ViewGara garaView = new ViewGara(partitaFormula1);
+        partitaFormula1.setViewGara(garaView);
 
+        partitaFormula1.avviaGara(); // Avvia la gara
     }
 }

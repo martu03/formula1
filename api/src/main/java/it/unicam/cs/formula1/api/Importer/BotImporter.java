@@ -44,7 +44,6 @@ public class BotImporter {
      * @param nomeFile il nome del file da cui importare i bot
      * @return la lista dei bot importati
      */
-
     public static List<IGiocatore> importaBot(String nomeFile) throws IOException {
         List<IGiocatore> giocatoriBot = new ArrayList<>();
 

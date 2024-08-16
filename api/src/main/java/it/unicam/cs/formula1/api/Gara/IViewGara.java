@@ -27,38 +27,13 @@
 
 package it.unicam.cs.formula1.api.Gara;
 
-import it.unicam.cs.formula1.api.Circuito.ICircuito;
-import it.unicam.cs.formula1.api.Giocatori.IGiocatore;
-
-import java.util.List;
-
 /**
- * Questa interfaccia rappresenta una gara di Formula 1, ovvero una partita del gioco
+ * Questa interfaccia ha il compito di visualizzare lo stato della gara.
  */
-public interface IGara {
+public interface IViewGara {
 
     /**
-     * Restituisce il circuito della gara.
+     * Stampa lo stato della gara.
      */
-    ICircuito getCircuito();
-
-    /**
-     * Restituisce i giocatori che partecipano alla gara.
-     */
-    List<IGiocatore> getGiocatori();
-
-    /**
-     * Avvia la gara con i giocatori specificati.
-     */
-    void avviaGara();
-
-    /**
-     * Avanza la gara di un turno, facendo muovere tutti i giocatori.
-     */
-    void avanzaTurno();
-
-    /**
-     * Restituisce il giocatore vincitore della gara.
-     */
-    void vincitore();
+    void stampaStatoGara();
 }

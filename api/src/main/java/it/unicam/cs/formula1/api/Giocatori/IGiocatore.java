@@ -52,13 +52,6 @@ public interface IGiocatore {
     IPosizione getPosizioneAttuale();
 
     /**
-     * Ritorna il punto principale del giocatore.
-     *
-     * @return il punto principale del giocatore.
-     */
-    Mossa getUltimaMossa();
-
-    /**
      * Imposta la posizione attuale del giocatore.
      *
      * @param posizioneAttuale la posizione attuale del giocatore.
@@ -66,17 +59,17 @@ public interface IGiocatore {
     void setPosizioneAttuale(IPosizione posizioneAttuale);
 
     /**
-     * Imposta il punto principale del giocatore.
+     * Imposta l'ultima mossa compiuta dal giocatore.
      *
-     * @param ultimaMossa il punto principale del giocatore.
+     * @param posizioneScelta posizione scelta dal giocatore.
      */
-    void setUltimaMossa(Mossa ultimaMossa);
+    void setUltimaMossa(IPosizione posizioneScelta);
 
     /**
      * Ritorna la prossima mossa del giocatore.
      *
-     * @param circuito
-     * @param posizioniGiocatori
+     * @param circuito il circuito su cui si sta giocando.
+     * @param posizioniGiocatori le posizioni dei giocatori.
      * @return la prossima mossa del giocatore.
      */
     IPosizione ProssimaPosizione(ICircuito circuito, List<IPosizione> posizioniGiocatori);
@@ -84,8 +77,8 @@ public interface IGiocatore {
     /**
      * Ritorna le posizioni raggiungibili dal giocatore.
      *
-     * @param circuito
-     * @param posizioniGiocatori
+     * @param circuito il circuito su cui si sta giocando.
+     * @param posizioniGiocatori le posizioni dei giocatori.
      * @return le posizioni raggiungibili dal giocatore.
      */
     List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori);

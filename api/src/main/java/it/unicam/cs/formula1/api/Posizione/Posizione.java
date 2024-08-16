@@ -27,12 +27,10 @@
  */
 package it.unicam.cs.formula1.api.Posizione;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
- * Questa classe rappresenta una posizione all'interno del circuito di Formula 1.
+ * Questa classe rappresenta una posizione che compone il circuito del gioco.
  */
 public class Posizione implements IPosizione{
     private int x;
@@ -70,26 +68,6 @@ public class Posizione implements IPosizione{
     }
 
     /**
-     * Imposta la coordinata X della posizione.
-     *
-     * @param x la coordinata X.
-     */
-    @Override
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    /**
-     * Imposta la coordinata Y della posizione.
-     *
-     * @param y la coordinata Y.
-     */
-    @Override
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    /**
      * Restituisce un array di 8 posizioni che rappresentano i vicini della posizione.
      *
      * @return un array di 8 posizioni.
@@ -102,13 +80,13 @@ public class Posizione implements IPosizione{
 
         for (int dx : valori) {
             for (int dy : valori) {
-                if (dx != 0 || dy != 0) {  // Escludi la posizione centrale
-                    ottoVicini[index] =  new Posizione(this.x + dx, this.y + dy);;
+                if (dx != 0 || dy != 0) {  // Escludo la posizione centrale
+                    ottoVicini[index] =  new Posizione(this.x + dx, this.y + dy);
                     index++;
                 }
             }
         }
-        return ottoVicini;  // Restituisci l'array
+        return ottoVicini;
     }
 
     /**

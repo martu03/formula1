@@ -86,9 +86,9 @@ public class Circuito implements ICircuito{
     }
 
     /**
-     * Restituisce il punto di partenza del circuito.
+     * Restituisce i punti di partenza del circuito.
      *
-     * @return La posizione di partenza del circuito.
+     * @return Le posizioni di partenza del circuito.
      */
     @Override
     public Set<IPosizione> getStartLine() {
@@ -96,9 +96,9 @@ public class Circuito implements ICircuito{
     }
 
     /**
-     * Restituisce il punto di arrivo del circuito.
+     * Restituisce i punti di arrivo del circuito.
      *
-     * @return La posizione di arrivo del circuito.
+     * @return Le posizioni di arrivo del circuito.
      */
     @Override
     public Set<IPosizione> getEndLine() {
