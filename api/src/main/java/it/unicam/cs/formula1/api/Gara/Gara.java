@@ -124,6 +124,8 @@ public class Gara implements IGara{
             avanzaTurno();
         }
         vincitore();
+        viewGara.stampaStatoGara();
+
     }
 
     /**

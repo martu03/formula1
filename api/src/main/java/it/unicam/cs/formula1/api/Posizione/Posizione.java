@@ -27,6 +27,8 @@
  */
 package it.unicam.cs.formula1.api.Posizione;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -73,15 +75,15 @@ public class Posizione implements IPosizione{
      * @return un array di 8 posizioni.
      */
     @Override
-    public IPosizione[] getOttoVicini() {
+    public List<IPosizione> getOttoVicini(){
         int[] valori = {-1, 0, 1};
-        Posizione[] ottoVicini = new Posizione[8];
+        List<IPosizione> ottoVicini = new ArrayList<>();
         int index = 0;
 
         for (int dx : valori) {
             for (int dy : valori) {
                 if (dx != 0 || dy != 0) {  // Escludo la posizione centrale
-                    ottoVicini[index] =  new Posizione(this.x + dx, this.y + dy);
+                    ottoVicini.add(new Posizione(this.x + dx, this.y + dy));
                     index++;
                 }
             }

@@ -112,7 +112,7 @@ public abstract class GiocatoreBase implements IGiocatore {
     @Override
     public List<IPosizione> getPosizioniRaggiungibili(ICircuito circuito, List<IPosizione> posizioniGiocatori) {
         IPosizione puntoPrincipale = calcolaPuntoPrincipale();
-        IPosizione[] ottoVicini;
+        List<IPosizione> ottoVicini = new ArrayList<>();
 
         //controllo se devo calcolare gli otto vicini del punto principale o della posizione attuale
         if(circuito.isInsideCircuit(puntoPrincipale))
@@ -121,16 +121,18 @@ public abstract class GiocatoreBase implements IGiocatore {
             ottoVicini = posizioneAttuale.getOttoVicini();
 
         List<IPosizione> posizioniPossibili = new ArrayList<>();
+
+        if(!puntoPrincipale.equals(posizioneAttuale)) {
+            ottoVicini.add(puntoPrincipale);
+            ottoVicini.remove(posizioneAttuale);
+        }
+
         for (IPosizione posizione : ottoVicini) {
             if(circuito.isInsideCircuit(posizione) && !(posizioniGiocatori.contains(posizione)) ){
                 posizioniPossibili.add(posizione);
             }
         }
 
-        if(!puntoPrincipale.equals(posizioneAttuale)) {
-            posizioniPossibili.add(puntoPrincipale);
-            posizioniPossibili.remove(posizioneAttuale);
-        }
         return posizioniPossibili;
     }
 

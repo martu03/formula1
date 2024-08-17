@@ -27,6 +27,8 @@
  */
 package it.unicam.cs.formula1.api.Posizione;
 
+import java.util.List;
+
 /**
  * Questa classe rappresenta una posizione che compone il circuito del gioco.
  */
@@ -51,6 +53,6 @@ public interface IPosizione {
      *
      * @return un array di 8 posizioni.
      */
-    IPosizione[] getOttoVicini();
+    List<IPosizione> getOttoVicini();
 
 }
