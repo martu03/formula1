@@ -36,18 +36,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Questa classe si occupa di importare i bot del gioco da un file.
+ */
 public class BotImporter {
 
     /**
      * Importa i bot del gioco da un file.
      *
      * @param nomeFile il nome del file da cui importare i bot
+     * @throws IOException se si verifica un errore durante la lettura del file
      * @return la lista dei bot importati
      */
     public static List<IGiocatore> importaBot(String nomeFile) throws IOException {
         List<IGiocatore> giocatoriBot = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeFile))) {
+
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
@@ -57,6 +62,7 @@ public class BotImporter {
                     giocatoriBot.add(giocatore);
                 }
             }
+
         }
         return giocatoriBot;
     }

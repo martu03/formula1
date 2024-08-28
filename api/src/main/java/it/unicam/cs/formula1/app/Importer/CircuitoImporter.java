@@ -56,50 +56,83 @@ public class CircuitoImporter {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeFile))) {
             String line;
-
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty()) {
-                    continue;
-                }
-
-                // Dividi la riga in tipo e coordinate
-                String[] parts = line.split(":");
-                if (parts.length != 2) {
-                    throw new IllegalArgumentException("Formato di riga non valido: " + line);
-                }
-
-                char tipo = parts[0].charAt(0);
-                String posizioneStr = parts[1];
-
-                // Parse le coordinate
-                String[] coords = posizioneStr.split(",");
-                if (coords.length != 2) {
-                    throw new IllegalArgumentException("Formato di posizione non valido: " + posizioneStr);
-                }
-
-                int x = Integer.parseInt(coords[0].trim());
-                int y = Integer.parseInt(coords[1].trim());
-                IPosizione posizione = new Posizione(x, y);
-
-                // Aggiungi la posizione al set appropriato
-                switch (tipo) {
-                    case 'N':
-                        posizioni.add(posizione);
-                        break;
-                    case 'S':
-                        posizioni.add(posizione);
-                        startLine.add(posizione);
-                        break;
-                    case 'E':
-                        posizioni.add(posizione);
-                        finishLine.add(posizione);
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Tipo di posizione non valido: " + tipo);
+                if (!line.isEmpty()) {
+                    gestisciRiga(line, posizioni, startLine, finishLine);
                 }
             }
         }
         return new Circuito(posizioni, startLine, finishLine);
+    }
+
+    /**
+     * Gestisce una riga del file e aggiorna i set di posizioni.
+     *
+     * @param line         La riga del file da gestire
+     * @param posizioni    Set di posizioni generali
+     * @param startLine    Set di posizioni di partenza
+     * @param finishLine   Set di posizioni di arrivo
+     */
+    private static void gestisciRiga(String line, Set<IPosizione> posizioni,
+                                     Set<IPosizione> startLine, Set<IPosizione> finishLine) {
+        try {
+            String[] parts = line.split(":");
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Formato di riga non valido: " + line);
+            }
+
+            char tipo = parts[0].charAt(0);
+            IPosizione posizione = convertiInPosizione(parts[1]);
+            aggiornaSetDiPosizioni(tipo, posizione, posizioni, startLine, finishLine);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Errore nella gestione della riga: " + line, e);
+        }
+    }
+
+    /**
+     * Crea un oggetto Posizione a partire da una stringa di coordinate.
+     *
+     * @param posizioneStr La stringa contenente le coordinate
+     * @return un oggetto IPosizione creato dalle coordinate
+     */
+    private static IPosizione convertiInPosizione(String posizioneStr) {
+        String[] coords = posizioneStr.split(",");
+        if (coords.length != 2) {
+            throw new IllegalArgumentException("Formato di posizione non valido: " + posizioneStr);
+        }
+
+        int x = Integer.parseInt(coords[0].trim());
+        int y = Integer.parseInt(coords[1].trim());
+        return new Posizione(x, y);
+    }
+
+    /**
+     * Aggiorna i set di posizioni in base al tipo di posizione.
+     *
+     * @param tipo         Il tipo di posizione ('N', 'S', 'E')
+     * @param posizione    L'oggetto IPosizione da aggiungere
+     * @param posizioni    Set di posizioni generali
+     * @param startLine    Set di posizioni di partenza
+     * @param finishLine   Set di posizioni di arrivo
+     */
+    private static void aggiornaSetDiPosizioni(char tipo, IPosizione posizione,
+                                               Set<IPosizione> posizioni, Set<IPosizione> startLine,
+                                               Set<IPosizione> finishLine) {
+        switch (tipo) {
+            case 'N':
+                posizioni.add(posizione);
+                break;
+            case 'S':
+                posizioni.add(posizione);
+                startLine.add(posizione);
+                break;
+            case 'E':
+                posizioni.add(posizione);
+                finishLine.add(posizione);
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di posizione non valido: " + tipo);
+        }
     }
 }

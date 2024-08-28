@@ -56,8 +56,7 @@ public class Main {
 
         // Importa il tracciato
         ICircuito circuito = CircuitoImporter.importaCircuito(percorsoTracciato);
-        if (circuito == null)
-            System.out.println("Errore durante l'importazione del circuito.");
+        if (circuito == null) System.out.println("Errore durante l'importazione del circuito.");
 
 
         // Importa i giocatori bot

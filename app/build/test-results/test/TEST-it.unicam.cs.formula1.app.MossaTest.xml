@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="it.unicam.cs.formula1.app.MossaTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-08-28T15:03:12" hostname="MSI" time="0.008">
+  <properties/>
+  <testcase name="testGetDx()" classname="it.unicam.cs.formula1.app.MossaTest" time="0.0"/>
+  <testcase name="testGetDy()" classname="it.unicam.cs.formula1.app.MossaTest" time="0.001"/>
+  <testcase name="testToString()" classname="it.unicam.cs.formula1.app.MossaTest" time="0.005"/>
+  <testcase name="testConstructor()" classname="it.unicam.cs.formula1.app.MossaTest" time="0.001"/>
+  <testcase name="testSetMossa()" classname="it.unicam.cs.formula1.app.MossaTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
