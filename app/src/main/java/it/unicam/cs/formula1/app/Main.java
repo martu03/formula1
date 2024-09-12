@@ -31,13 +31,15 @@
 package it.unicam.cs.formula1.app;
 
 
-import it.unicam.cs.formula1.app.Circuito.ICircuito;
-import it.unicam.cs.formula1.app.Gara.Gara;
-import it.unicam.cs.formula1.app.Gara.ViewGara;
-import it.unicam.cs.formula1.app.Giocatori.GiocatoreUmano;
-import it.unicam.cs.formula1.app.Giocatori.IGiocatore;
-import it.unicam.cs.formula1.app.Importer.BotImporter;
-import it.unicam.cs.formula1.app.Importer.CircuitoImporter;
+import it.unicam.cs.formula1.api.circuito.ICircuito;
+import it.unicam.cs.formula1.api.gara.Gara;
+import it.unicam.cs.formula1.api.gara.ViewGara;
+import it.unicam.cs.formula1.api.giocatore.GiocatoreUmano;
+import it.unicam.cs.formula1.api.giocatore.IGiocatore;
+import it.unicam.cs.formula1.api.importer.BotImporter;
+import it.unicam.cs.formula1.api.importer.CircuitoImporter;
+import it.unicam.cs.formula1.api.strategia.IStrategiaDiGioco;
+import it.unicam.cs.formula1.api.strategia.StrategiaPuntoPrincipale;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +48,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // Controlla se è stato passato almeno un argomento
         if (args.length < 2) {
-            System.out.println("Usage: gradle run --args=\"<path-to-track-file> <path-to-bot-players-file>\"");
+            System.out.println("Usare: gradle run --args=\"<percorso-file-circuito> <percorso-file-giocatori-bot>\"");
             return;
         }
 
@@ -62,7 +64,8 @@ public class Main {
         // Importa i giocatori bot
         List<IGiocatore> giocatori = BotImporter.importaBot(percorsoGiocatoriBot);
         if (giocatori != null) {
-            GiocatoreUmano martina = new GiocatoreUmano('M');
+            IStrategiaDiGioco strategiaMartina = new StrategiaPuntoPrincipale();
+            GiocatoreUmano martina = new GiocatoreUmano('M', strategiaMartina);
             giocatori.add(martina); // Aggiungiamo il giocatore umano
         } else {
             System.out.println("Errore durante l'importazione dei giocatori bot.");

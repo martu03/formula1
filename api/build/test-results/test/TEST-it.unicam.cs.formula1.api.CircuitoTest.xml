@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="it.unicam.cs.formula1.api.CircuitoTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2024-09-12T21:40:14" hostname="MSI" time="0.019">
+  <properties/>
+  <testcase name="testIsInsideEndLine()" classname="it.unicam.cs.formula1.api.CircuitoTest" time="0.013"/>
+  <testcase name="testGetEndLine()" classname="it.unicam.cs.formula1.api.CircuitoTest" time="0.001"/>
+  <testcase name="testGetStartLine()" classname="it.unicam.cs.formula1.api.CircuitoTest" time="0.001"/>
+  <testcase name="testGetAllPositions()" classname="it.unicam.cs.formula1.api.CircuitoTest" time="0.0"/>
+  <testcase name="testIsInsideCircuit()" classname="it.unicam.cs.formula1.api.CircuitoTest" time="0.0"/>
+  <testcase name="testIsInsideStartLine()" classname="it.unicam.cs.formula1.api.CircuitoTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

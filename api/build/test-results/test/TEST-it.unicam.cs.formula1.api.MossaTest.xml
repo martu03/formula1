@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="it.unicam.cs.formula1.api.MossaTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-09-12T21:40:14" hostname="MSI" time="0.005">
+  <properties/>
+  <testcase name="testSetCoordinate()" classname="it.unicam.cs.formula1.api.MossaTest" time="0.0"/>
+  <testcase name="testToString()" classname="it.unicam.cs.formula1.api.MossaTest" time="0.003"/>
+  <testcase name="testGetCoordinate()" classname="it.unicam.cs.formula1.api.MossaTest" time="0.0"/>
+  <testcase name="testConstructor()" classname="it.unicam.cs.formula1.api.MossaTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
